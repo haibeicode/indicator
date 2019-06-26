@@ -1,2 +1,9 @@
-# indicator
-quant indicator tool
+# Quant Indicator Tool
+
+## INSTALL
+`pip install indicator`
+
+## UPGRADE
+`pip install --upgrade indicator`
+
+
