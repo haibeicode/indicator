@@ -1,10 +1,23 @@
+# coding:utf-8
+#
+# Copyright 2019-2029 shenzhen haibei Media .Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
-5.	压力支撑指标
-主要用于分析股价目前收到的压力和支撑
-布林带 BOLL
-麦克指标 MIKE
+Pressure support Indicators
+@author Tab
 """
-from common.indicator.base import *
+from indicator.base import *
 
 
 def BOLL(data_frame, N=20, P=2):
@@ -36,9 +49,9 @@ def MIKE(data_frame, N=12):
     :param N:
     :return:
     """
-    HIGH = data_frame.high
-    LOW = data_frame.low
-    CLOSE = data_frame.close
+    HIGH = data_frame['high']
+    LOW = data_frame['low']
+    CLOSE = data_frame['close']
 
     TYP = (HIGH + LOW + CLOSE) / 3
     LL = LLV(LOW, N)
@@ -54,23 +67,6 @@ def MIKE(data_frame, N=12):
         'WR': WR, 'MR': MR, 'SR': SR,
         'WS': WS, 'MS': MS, 'SS': SS
     })
-
-
-def BBI(data_frame, N1=3, N2=6, N3=12, N4=24):
-    """
-    多空指标
-    :param data_frame:
-    :param N1:
-    :param N2:
-    :param N3:
-    :param N4:
-    :return:
-    """
-    C = data_frame['close']
-    bbi = (MA(C, N1) + MA(C, N2) + MA(C, N3) + MA(C, N4)) / 4
-    DICT = {'BBI': bbi}
-
-    return pd.DataFrame(DICT)
 
 
 def MFI(data_frame, N=14):
@@ -118,7 +114,6 @@ def ATR(data_frame, N=14):
     return pd.DataFrame({'TR': TR, 'ATR': atr})
 
 
-
 def DDI(data_frame, N=13, N1=26, M=1, M1=5):
     """
     方向标准离差指数 分析DDI柱状线，由红变绿(正变负)，卖出信号参考；由绿变红，买入信号参考。
@@ -164,7 +159,7 @@ def lower_shadow(data_frame):
     :param data_frame:
     :return:
     """
-    return abs(data_frame.low - MIN(data_frame.open, data_frame.close))
+    return abs(data_frame['low'] - MIN(data_frame['open'], data_frame['close']))
 
 
 def upper_shadow(data_frame):
@@ -173,7 +168,7 @@ def upper_shadow(data_frame):
     :param data_frame:
     :return:
     """
-    return abs(data_frame.high - MAX(data_frame.open, data_frame.close))
+    return abs(data_frame['high'] - MAX(data_frame['open'], data_frame['close']))
 
 
 def body_abs(data_frame):
@@ -182,7 +177,7 @@ def body_abs(data_frame):
     :param data_frame:
     :return:
     """
-    return abs(data_frame.open - data_frame.close)
+    return abs(data_frame['open'] - data_frame['close'])
 
 
 def body(data_frame):
@@ -191,7 +186,7 @@ def body(data_frame):
     :param data_frame:
     :return:
     """
-    return data_frame.close - data_frame.open
+    return data_frame['close'] - data_frame['open']
 
 
 def price_pcg(data_frame):
@@ -200,7 +195,7 @@ def price_pcg(data_frame):
     :param data_frame:
     :return:
     """
-    return body(data_frame) / data_frame.open
+    return body(data_frame) / data_frame['open']
 
 
 def amplitude(data_frame):
@@ -209,4 +204,4 @@ def amplitude(data_frame):
     :param data_frame:
     :return:
     """
-    return (data_frame.high - data_frame.low) / data_frame.low
+    return (data_frame['high'] - data_frame['low']) / data_frame['low']

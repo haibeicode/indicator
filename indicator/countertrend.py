@@ -1,20 +1,26 @@
+# coding:utf-8
+#
+# Copyright 2019-2029 shenzhen haibei Media .Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""
+Counter Trend Indicator
+Overbought and Oversold
+@author Tab
 """
 
-2.	反趋向指标
-主要捕捉趋势的转折点
-
-随机指标KDJ
-乖离率 BIAS
-变动速率 ROC
-顺势指标 CCI
-威廉指标 W&R
-震荡量(变动速率) OSC
-相对强弱指标 RSI
-动态买卖指标 ADTM
-
-"""
-
-from common.indicator.base import *
+from indicator.base import *
 
 
 def CCI(data_frame, N=14):
@@ -137,7 +143,7 @@ def MTM(data_frame, N=12, M=6):
     :param M:
     :return:
     """
-    C = data_frame.close
+    C = data_frame['close']
     mtm = C - REF(C, N)
     MTMMA = MA(mtm, M)
     DICT = {'MTM': mtm, 'MTMMA': MTMMA}
@@ -485,37 +491,93 @@ def BIAS(data_frame, N1=6, N2=12, N3=24):
     return pd.DataFrame(DICT)
 
 
-def ACCER(data_frame, N=8):
+def CYD(data_frame, N=21):
     """
-    幅度涨速
+    承接因子
+    天数:Param#1天 21
 
-    天数:Param#1天 8
+    输出CYDS:以收盘价计算的获利盘比例/(成交量(手)/当前流通股本(手))
+    输出CYDN:以收盘价计算的获利盘比例/成交量(手)/当前流通股本(手)的N日简单移动平均
 
-    输出幅度涨速:收盘价的N日线性回归斜率/收盘价
-
-    幅度涨速
-    算法：
-    先求出斜率，再对其价格进行归一
+    1.CYD称为承接因子指标，其市场含义是以今天的成交量承接所有获利盘需要的天数;
+    2.CYD可以反映市场上持股者的信心。 CYD大，说明以较小的成交量就可以维持较多的获利盘，说明市场上持股者的信心较强；反之CYD小，或者由于成交量大或者由于获利盘小，都反映了持股者信心不足;
     :param data_frame:
     :param N:
     :return:
     """
+    VOL = data_frame['volume']
     CLOSE = data_frame['close']
-    DICT = talib.LINEARREG_SLOPE(CLOSE, timeperiod=N)
+    CYDS = WINNER(CLOSE) / (VOL / CAPITAL)
+    CYDN = WINNER(CLOSE) / MA(VOL / CAPITAL, N)
+    DICT = {'CYDS': CYDS, 'CYDN': CYDN}
+    return pd.DataFrame(DICT)
+
+
+def CYF(data_frame, N=21):
+    """
+    市场能量
+
+    N:Param#1天; 21
+
+    输出市场能量:100-100/(1+换手线的N日指数移动平均)
+
+    1.CYF反映了市场公众的状态和追涨热情,又称市场能量指标;
+    2.使用CYF判断股票的活跃程度, CYF小于10的股票是冷门股，CYF在20到40之间是活跃股，CYF大于50是热门股;
+    3.CYF与股价顶背离时,易形成反转.
+    :param data_frame:
+    :param N:
+    :param M:
+    :return:
+    """
+    HSL = data_frame['pct_change']
+    CYF = 100 - 100 / (1 + EMA(HSL, N))
+    return pd.DataFrame(CYF)
+
+
+def FSL(data_frame):
+    """
+    分水岭
+
+    输出SWL:(收盘价的5日指数移动平均*7+收盘价的10日指数移动平均*3)/10
+    输出SWS:以1和100*(成交量(手)的5日累和/(3*当前流通股本(手)))的较大值为权重收盘价的12日指数移动平均的动态移动平均
+
+    股价在分水岭之上为强势,反之为弱势.
+    :param data_frame:
+    :return:
+    """
+    VOL = data_frame['volume']
+    CLOSE = data_frame['close']
+    SWL = (EMA(CLOSE, 5) * 7 + EMA(CLOSE, 10) * 3) / 10
+    SWS = DMA(EMA(CLOSE, 12), MAX(1, 100 * (SUM(VOL, 5) / (3 * CAPITAL))))
+    DICT = {'SWL': SWL, 'MAADTM': SWS}
+
     return pd.DataFrame(DICT)
 
 
 def ADTM(data_frame, N=23, M=8):
     """
     动态买卖气指标
+
+    天数:Param#1天 23
+    ADTM的Param#2天移动平均 8
+
+    DTM赋值:如果开盘价<=1日前的开盘价,返回0,否则返回(最高价-开盘价)和(开盘价-1日前的开盘价)的较大值
+    DBM赋值:如果开盘价>=1日前的开盘价,返回0,否则返回(开盘价-最低价)和(开盘价-1日前的开盘价)的较大值
+    STM赋值:DTM的N日累和
+    SBM赋值:DBM的N日累和
+    输出动态买卖气指标:如果STM>SBM,返回(STM-SBM)/STM,否则返回如果STM=SBM,返回0,否则返回(STM-SBM)/SBM
+    输出MAADTM:ADTM的M日简单移动平均
+
+    1.该指标在+1到-1之间波动;
+    2.低于-0.5时为很好的买入点,高于+0.5时需注意风险.
     :param data_frame:
     :param N:
     :param M:
     :return:
     """
-    HIGH = data_frame.high
-    LOW = data_frame.low
-    OPEN = data_frame.open
+    HIGH = data_frame['high']
+    LOW = data_frame['low']
+    OPEN = data_frame['open']
     DTM = IF(OPEN > REF(OPEN, 1), MAX((HIGH - OPEN), (OPEN - REF(OPEN, 1))), 0)
     DBM = IF(OPEN < REF(OPEN, 1), MAX((OPEN - LOW), (OPEN - REF(OPEN, 1))), 0)
     STM = SUM(DTM, N)
@@ -524,5 +586,89 @@ def ADTM(data_frame, N=23, M=8):
                IF(STM != SBM, (STM - SBM) / SBM, 0))
     MAADTM = MA(ADTM1, M)
     DICT = {'ADTM': ADTM1, 'MAADTM': MAADTM}
+
+    return pd.DataFrame(DICT)
+
+
+def ATR(data_frame, N=14):
+    """
+    真实波幅
+
+    真实波幅的Param#1日移动平均 14
+
+    输出MTR:(最高价-最低价)和1日前的收盘价-最高价的绝对值的较大值和1日前的收盘价-最低价的绝对值的较大值
+    输出真实波幅:MTR的N日简单移动平均
+
+    算法：今日振幅、今日最高与昨收差价、今日最低与昨收差价中的最大值，为真实波幅，求真实波幅的N日移动平均
+    参数：N　天数，一般取14
+    :param data_frame:
+    :param N:
+    :return:
+    """
+    CLOSE = data_frame['close']
+    HIGH = data_frame['high']
+    LOW = data_frame['low']
+    MTR = MAX(MAX((HIGH - LOW), ABS(REF(CLOSE, 1) - HIGH)), ABS(REF(CLOSE, 1) - LOW))
+    ATR = MA(MTR, N)
+    DICT = {'MTR': MTR, 'ATR': ATR}
+
+    return pd.DataFrame(DICT)
+
+
+def ATR(data_frame, M=10):
+    """
+    真实波幅
+
+    真实波幅的Param#1日移动平均 14
+
+    输出MTR:(最高价-最低价)和1日前的收盘价-最高价的绝对值的较大值和1日前的收盘价-最低价的绝对值的较大值
+    输出真实波幅:MTR的N日简单移动平均
+
+    算法：今日振幅、今日最高与昨收差价、今日最低与昨收差价中的最大值，为真实波幅，求真实波幅的N日移动平均
+    参数：N　天数，一般取14
+    :param data_frame:
+    :param M:
+    :return:
+    """
+    CLOSE = data_frame['close']
+    LOW = data_frame['low']
+    OPEN = data_frame['open']
+    HIGH = data_frame['high']
+    MID = (3 * CLOSE + LOW + OPEN + HIGH) / 6
+    DKX = (20 * MID + 19 * REF(MID, 1) + 18 * REF(MID, 2) + 17 * REF(MID, 3) +
+           16 * REF(MID, 4) + 15 * REF(MID, 5) + 14 * REF(MID, 6) +
+           13 * REF(MID, 7) + 12 * REF(MID, 8) + 11 * REF(MID, 9) +
+           10 * REF(MID, 10) + 9 * REF(MID, 11) + 8 * REF(MID, 12) +
+           7 * REF(MID, 13) + 6 * REF(MID, 14) + 5 * REF(MID, 15) +
+           4 * REF(MID, 16) + 3 * REF(MID, 17) + 2 * REF(MID, 18) + REF(MID, 20)) / 210
+    MADKX = MA(DKX, M)
+    DICT = {'DKX': DKX, 'MADKX': MADKX}
+    return pd.DataFrame(DICT)
+
+
+def TAPI(data_frame, M=6):
+    """
+    加权指数成交值(需下载日线)
+
+    Param#1日TAPI 6
+
+    输出加权指数成交值(需下载日线):成交额(元)/大盘的收盘价
+    输出MATAIP:TAPI的M日简单移动平均
+
+    1.先界定TAPI长期以来经常性的高低极限值，当TAPI触及顶端极
+      限时，股价可能形成头部；当TAPI触及底端极限时，股价可能
+      形成底部；
+    2.行情上涨，TAPI应伴随上涨；若不升反跌，则近期内将面临回档；
+    3.先前大盘量缩下跌，当其回升时，TAPI值却持续下跌，可视为买入信号。
+
+    注意：此指标使用到了大盘的数据，所以需要下载完整的
+    日线数据,否则显示可能不正确
+    :param data_frame:
+    :param M:
+    :return:
+    """
+    TAPI = AMOUNT / INDEXC
+    MATAIP = MA(TAPI, M)
+    DICT = {'TAPI': TAPI, 'MATAIP': MATAIP}
 
     return pd.DataFrame(DICT)

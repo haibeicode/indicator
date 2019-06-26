@@ -1,23 +1,22 @@
 # -*- coding: UTF-8 -*-
 import os
- 
-import setuptools
- 
-setuptools.setup(
+from setuptools import (find_packages, setup)
+
+
+def read(file_name):
+    return open(os.path.join(os.path.dirname(__file__), file_name)).read()
+
+
+setup(
     name='indicator',
-    version='2019.06.26',
-    keywords='quant indicator',
-    description='quant indicator tool',
-    long_description=open(
-        os.path.join(
-            os.path.dirname(__file__),
-            'README.md'
-        )
-    ).read(),
-    author='haibei',
+    version=read('indicator/VERSION.txt'),
+    keywords='Financial Indicator Tool',
+    description='Solving Quantitative Indicators of Funds, Stocks and Foreign Exchange Tool',
+    long_description=read('indicator/README.md'),
+    author='Tab',
     author_email='ns_v@sina.com',
- 
-    url='https://github.com/haibeicode/indicator', 
-    packages=setuptools.find_packages(),
-    license='APACHE'
+    url='https://github.com/haibeicode/indicator',
+    install_requires=['pandas', 'numpy', 'math'],
+    packages=find_packages(),
+    license='Apache 2.0',
 )

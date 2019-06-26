@@ -1,14 +1,24 @@
-
+# coding:utf-8
+#
+# Copyright 2019-2029 shenzhen haibei Media .Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 """
-4.	量价指标
-通过成交量和股价变动关系分析未来趋势
-震荡升降指标ASI
-价量趋势PVT`
-能量潮OBV
-量价趋势VPT
+Quantity and price Indicators
+@author Tab
 """
-from common.indicator.base import *
+from indicator.base import *
 
 
 def ASI(data_frame, M1=26, M2=10):
@@ -51,8 +61,8 @@ def PVT(data_frame):
     :param data_frame:
     :return:
     """
-    CLOSE = data_frame.close
-    VOL = data_frame.volume
+    CLOSE = data_frame['close']
+    VOL = data_frame['volume']
     PVT = SUM((CLOSE - REF(CLOSE, 1)) / REF(CLOSE, 1) * VOL, 0)
     return pd.DataFrame({'PVT': PVT})
 
@@ -63,25 +73,9 @@ def OBV(data_frame):
     :param data_frame:
     :return:
     """
-    VOL = data_frame.volume
-    CLOSE = data_frame.close
+    VOL = data_frame['volume']
+    CLOSE = data_frame['close']
     return pd.DataFrame({
         'OBV': np.cumsum(IF(CLOSE > REF(CLOSE, 1), VOL, IF(CLOSE < REF(CLOSE, 1), -VOL, 0))) / 10000
     })
 
-
-def VPT(data_frame, N=51, M=6):
-    """
-
-    :param data_frame:
-    :param N:
-    :param M:
-    :return:
-    """
-    VOL = data_frame.volume
-    CLOSE = data_frame.close
-    VPT = SUM(VOL * (CLOSE - REF(CLOSE, 1)) / REF(CLOSE, 1), 0)
-    MAVPT = MA(VPT, M)
-    return pd.DataFrame({
-        'VPT': VPT, 'MAVPT': MAVPT
-    })

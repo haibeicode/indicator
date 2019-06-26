@@ -1,16 +1,20 @@
-"""
+# coding:utf-8
+#
+# Copyright 2019-2029 shenzhen haibei Media .Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-6.	大盘指标
-通过涨跌家数研究大盘指数的走势
-涨跌比率 ADR
-绝对幅度指标 ABI
-新三价率 TBR
-腾落指数 ADL
-广量冲力指标
-指数平滑广量 STIX
-"""
-
-from common.indicator.base import *
+import talib
 
 
 ################
@@ -124,20 +128,6 @@ def DIV(data_frame):
     return talib.DIV(high, low)
 
 
-def MAX(data_frame, time_period=30):
-    """
-    函数名：MAX
-    名称：周期内最大值（未满足周期返回nan）
-
-    python API
-    real=MAX(close, timeperiod=30)
-    :param time_period:
-    :return:
-    """
-    close = data_frame['close']
-    return talib.MAX(close, timeperiod=time_period)
-
-
 def MAXINDEX(data_frame, time_period=30):
     """
     函数名：MAXINDEX
@@ -150,20 +140,6 @@ def MAXINDEX(data_frame, time_period=30):
     """
     close = data_frame['close']
     return talib.MAXINDEX(close, timeperiod=time_period)
-
-
-def MIN(data_frame, time_period=30):
-    """
-    函数名：MIN
-    名称：周期内最小值 （未满足周期返回nan）
-
-    python API
-    real=MIN(close, timeperiod=30)
-    :param time_period:
-    :return:
-    """
-    close = data_frame['close']
-    return talib.MIN(close, timeperiod=time_period)
 
 
 def MININDEX(data_frame, time_period=30):
@@ -231,20 +207,6 @@ def SUB(data_frame):
     high = data_frame['high']
     low = data_frame['low']
     return talib.SUB(high, low)
-
-
-def SUM(data_frame, time_period=30):
-    """
-    函数名：SUM
-    名称：周期内求和
-
-    python API
-    real=SUM(close, timeperiod=30)
-    :param time_period:
-    :return:
-    """
-    close = data_frame['close']
-    return talib.SUM(close, timeperiod=time_period)
 
 
 ################
@@ -507,6 +469,25 @@ def ADX(data_frame, time_period=14):
     return talib.ADX(high, low, close, timeperiod=time_period)
 
 
+def ACCER(data_frame, N=8):
+    """
+    幅度涨速
+
+    天数:Param#1天 8
+
+    输出幅度涨速:收盘价的N日线性回归斜率/收盘价
+
+    幅度涨速
+    算法：
+    先求出斜率，再对其价格进行归一
+    :param data_frame:
+    :param N:
+    :return:
+    """
+    CLOSE = data_frame['close']
+    return talib.LINEARREG_SLOPE(CLOSE, timeperiod=N)
+
+
 def ADXR(data_frame, time_period=14):
     """
     函数名：ADXR
@@ -588,32 +569,6 @@ def BOP(data_frame):
     return talib.BOP(open, high, low, close)
 
 
-def CCI(data_frame, time_period=14):
-    """
-    函数名：CCI
-    名称：顺势指标
-
-    简介：CCI指标专门测量股价是否已超出常态分布范围
-
-    # 指标应用
-    *1.当CCI指标曲线在 + 100线～-100线的常态区间里运行时, CCI指标参考意义不大，可以用KDJ等其它技术指标进行研判。
-    *2.当CCI指标曲线从上向下突破 + 100线而重新进入常态区间时，表明市场价格的上涨阶段可能结束，将进入一个比较长时间的震荡整理阶段，应及时平多做空。
-    *3.当CCI指标曲线从上向下突破 - 100线而进入另一个非常态区间（超卖区）时，表明市场价格的弱势状态已经形成，将进入一个比较长的寻底过程，可以持有空单等待更高利润。如果CCI指标曲线在超卖区运行了相当长的一段时间后开始掉头向上，表明价格的短期底部初步探明，可以少量建仓。CCI指标曲线在超卖区运行的时间越长，确认短期的底部的准确度越高。
-    *4.CCI指标曲线从下向上突破 - 100线而重新进入常态区间时，表明市场价格的探底阶段可能结束，有可能进入一个盘整阶段，可以逢低少量做多。
-    *5.CCI指标曲线从下向上突破 + 100线而进入非常态区间(超买区)时，表明市场价格已经脱离常态而进入强势状态，如果伴随较大的市场交投，应及时介入成功率将很大。
-    *6.CCI指标曲线从下向上突破 + 100线而进入非常态区间(超买区)后，只要CCI指标曲线一直朝上运行，表明价格依然保持强势可以继续持有待涨。但是，如果在远离 + 100线的地方开始掉头向下时，则表明市场价格的强势状态将可能难以维持，涨势可能转弱，应考虑卖出。如果前期的短期涨幅过高同时价格回落时交投活跃，则应该果断逢高卖出或做空。
-    *CCI主要是在超买和超卖区域发生作用，对急涨急跌的行情检测性相对准确。非常适用于股票、外汇、贵金属等市场的短期操作。[1]
-
-    python API
-    real=CCI(high, low, close, timeperiod=14)
-    :return:
-    """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
-    return talib.CCI(high, low, close, timeperiod=time_period)
-
-
 def CMO(data_frame, time_period=14):
     """
     函数名：CMO
@@ -661,26 +616,6 @@ def DX(data_frame, time_period=14):
     low = data_frame['low']
     close = data_frame['close']
     return talib.DX(high, low, close, timeperiod=time_period)
-
-
-def MACD(data_frame, fast_period=12, slow_period=26, signal_period=9):
-    """
-    函数名：MACD
-    名称：平滑异同移动平均线
-
-    简介：利用收盘价的短期（常用为12日）指数移动平均线与长期（常用为26日）指数移动平均线之间的聚合与分离状况，对买进、卖出时机作出研判的技术指标。
-
-    分析和应用：
-    [百度百科](https://baike.baidu.com/item/MACD%E6%8C%87%E6%A0%87?fromtitle=MACD&fromid=3334786)
-    [维基百科](https://zh.wikipedia.org/wiki/MACD)
-    [同花顺学院](http://www.iwencai.com/school/search?cg=100&w=MACD)
-
-    python API
-    macd, macdsignal, macdhist=MACD(close, fastperiod=12, slowperiod=26, signalperiod=9)
-    :return:
-    """
-    close = data_frame['close']
-    return talib.MACD(close, fastperiod=fast_period, slowperiod=slow_period, signalperiod=signal_period)
 
 
 def MACDEXT(data_frame, fast_period=12, fast_ma_type=0, slow_period=26, slow_ma_type=0, signal_period=9,
@@ -1046,26 +981,6 @@ def DEMA(data_frame, time_period=30):
     return talib.DEMA(close, timeperiod=time_period)
 
 
-def EMA(data_frame, time_period=30):
-    """
-    函数名：EMA
-    名称： 指数平均数
-
-    简介：是一种趋向类指标，其构造原理是仍然对价格收盘价进行算术平均，并根据计算结果来进行分析，用于判断价格未来走势的变动趋势。
-
-    分析和应用：
-    [百度百科](https://baike.baidu.com/item/EMA/12646151)
-    [同花顺学院](http://www.iwencai.com/yike/detail/auid/b7a39d74783ad689?rid=589)
-
-
-    python API
-    real=EMA(close, timeperiod=30)
-    :return:
-    """
-    close = data_frame['close']
-    return talib.EMA(close, timeperiod=time_period)
-
-
 def HT_TRENDLINE(data_frame):
     """
     函数名：HT_TRENDLINE
@@ -1103,25 +1018,6 @@ def KAMA(data_frame, time_period=30):
     """
     close = data_frame['close']
     return talib.KAMA(close, timeperiod=time_period)
-
-
-def MA(data_frame, time_period=30, ma_type=0):
-    """
-    函数名：MA
-    名称： 移动平均线
-
-    简介：移动平均线，Moving Average，简称MA，原本的意思是移动平均，由于我们将其制作成线形，所以一般称之为移动平均线，简称均线。它是将某一段时间的收盘价之和除以该周期。 比如日线MA5指5天内的收盘价除以5 。
-
-    分析和应用：
-    [百度百科](https://baike.baidu.com/item/%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%E7%BA%BF/217887?fromtitle=MA&fromid=1511750#viewPageContent)
-    [同花顺学院](http://www.iwencai.com/yike/detail/auid/a04d723659318237?rid=96)
-
-    python API
-    real=MA(close, timeperiod=30, matype=0)
-    :return:
-    """
-    close = data_frame['close']
-    return talib.MA(close, timeperiod=time_period, matype=ma_type)
 
 
 def MAMA(data_frame, fast_limit=0, slow_limit=0):
