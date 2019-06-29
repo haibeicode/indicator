@@ -19,48 +19,50 @@ Indicator Fundamental Function
 @author Tab
 """
 
-import math
 import numpy as np
 import pandas as pd
 
 
-def IF(cond, v1, v2):
+# 算术函数
+
+def NOT(b):
     """
-    :param cond:
-    :param v1:
-    :param v2:
+    取反
+    :param b:
     :return:
     """
-    var = np.where(cond, v1, v2)
-    return pd.Series(var, index=v1.index)
+    if b == 0:
+        return 1
+    else:
+        return 0
+
+
+def IF(cond, a, b):
+    """
+    逻辑取值
+    :param cond:
+    :param a:
+    :param b:
+    :return:
+    """
+    return pd.Series(np.where(cond, a, b), index=a.index)
 
 
 def IFAND(cond1, cond2, v1, v2):
     """
+    逻辑和
     :param cond1:
     :param cond2:
     :param v1:
     :param v2:
     :return:
     """
-    var = np.where(np.logical_and(cond1, cond2), v1, v2)
-    return pd.Series(var, index=v1.index)
-
-
-def IFOR(cond1, cond2, v1, v2):
-    """
-    :param cond1:
-    :param cond2:
-    :param v1:
-    :param v2:
-    :return:
-    """
-    var = np.where(np.logical_or(cond1, cond2), v1, v2)
-    return pd.Series(var, index=v1.index)
+    return pd.Series(np.where(np.logical_and(cond1, cond2), v1, v2), index=v1.index)
 
 
 def MAX(a, b):
     """
+    求最大值
     :param a:
     :param b:
     :return:
@@ -70,6 +72,7 @@ def MAX(a, b):
 
 def MIN(a, b):
     """
+    求最小值
     :param a:
     :param b:
     :return:
@@ -77,81 +80,21 @@ def MIN(a, b):
     return IF(a < b, a, b)
 
 
-def SINGLE_CROSS(a, b):
+# 逻辑函数
+
+def CROSS(a, b):
     """
+    两条线交叉
     :param a:
     :param b:
     :return:
     """
-    if a.iloc[-2] < b.iloc[-2] and a.iloc[-1] > b.iloc[-1]:
-        return True
-    else:
-        return False
-
-
-def XARROUND(x, y):
-    """
-    :param x:
-    :param y:
-    :return:
-    """
-    return np.round(y * (round(x / y - math.floor(x / y) + 0.00000000001) + math.floor(x / y)), 2)
-
-
-def REF(series, n):
-    """
-    :param series:
-    :param n:
-    :return:
-    """
-    var = series.diff(n)
-    return series - var
-
-
-def LAST(cond, n1, n2):
-    """
-    表达持续性
-    :param cond:
-    :param n1:
-    :param n2:
-    :return:
-    """
-    n2 = 1 if n2 == 0 else n2
-    assert n2 > 0
-    assert n1 > n2
-    return cond.iloc[-n1:-n2].all()
-
-
-def MA(series, n):
-    """
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.Series.rolling(series, n).mean()
-
-
-def EMA(series, n):
-    """
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.Series.ewm(series, span=n, min_periods=n - 1, adjust=True).mean()
-
-
-def MEMA(series, n):
-    """
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.rolling_mean(series, span=n)
+    return (pd.Series(np.where(a < b, 1, 0), index=a.index).diff() < 0).apply(int)
 
 
 def SMA(series, n, m=1):
     """
-    威廉SMA算法
+    移动平均
     :param series:
     :param n:
     :param m:
@@ -176,17 +119,59 @@ def SMA(series, n, m=1):
     return pd.Series(ret, index=series.tail(len(ret)).index)
 
 
-def DIFF(series, n=1):
+def MA(series, n):
     """
+    简单移动平均
     :param series:
     :param n:
     :return:
     """
-    return pd.Series(series).diff(n)
+    return pd.Series.rolling(series, n).mean()
+
+
+def EMA(series, n):
+    """
+    指数移动平均
+    :param series:
+    :param n:
+    :return:
+    """
+    return pd.Series.ewm(series, span=n, min_periods=n - 1, adjust=True).mean()
+
+
+def MEMA(series, n):
+    """
+    平滑移动平均
+    :param series:
+    :param n:
+    :return:
+    """
+    return pd.rolling_mean(series, span=n)
+
+
+def EXPMEMA(df, P1=5, P2=10, P3=20, P4=60):
+    """
+    指数平滑移动平均
+    :param df:
+    :param P1:
+    :param P2:
+    :param P3:
+    :param P4:
+    :return:
+    """
+    CLOSE = df['close']
+    MA1 = MEMA(CLOSE, P1)
+    MA2 = MEMA(CLOSE, P2)
+    MA3 = MEMA(CLOSE, P3)
+    MA4 = MEMA(CLOSE, P4)
+    return pd.DataFrame({
+        'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
+    })
 
 
 def HHV(series, n):
     """
+    求最高值
     :param series:
     :param n:
     :return:
@@ -196,6 +181,7 @@ def HHV(series, n):
 
 def LLV(series, n):
     """
+    求最低值
     :param series:
     :param n:
     :return:
@@ -205,6 +191,7 @@ def LLV(series, n):
 
 def SUM(series, n):
     """
+    求总和
     :param series:
     :param n:
     :return:
@@ -212,28 +199,29 @@ def SUM(series, n):
     return pd.Series.rolling(series, n).sum()
 
 
+# 数学函数
 def ABS(series):
     """
+    求绝对值
     :param series:
     :return:
     """
     return abs(series)
 
 
-def CROSS(a, b):
+def REF(series, n):
     """
-    A上穿B B下穿A
-    :param a:
-    :param b:
+    引用若干周期前的数据
+    :param series:
+    :param n:
     :return:
     """
-
-    var = np.where(a < b, 1, 0)
-    return (pd.Series(var, index=a.index).diff() < 0).apply(int)
+    return series - series.diff(n)
 
 
 def COUNT(cond, n):
     """
+    统计满足条件的周期数
     :param cond:
     :param n:
     :return:
@@ -243,6 +231,7 @@ def COUNT(cond, n):
 
 def STD(series, n):
     """
+    估算标准差
     :param series:
     :param n:
     :return:
@@ -250,6 +239,7 @@ def STD(series, n):
     return pd.Series.rolling(series, n).std()
 
 
+# 统计函数
 def AVEDEV(series, n):
     """
     平均绝对偏差
@@ -260,153 +250,33 @@ def AVEDEV(series, n):
     return series.rolling(n).apply(lambda x: (np.abs(x - x.mean())).mean(), raw=True)
 
 
-def MACD(series, fast, slow, mid):
-    """
-    函数名：MACD
-    名称：平滑异同移动平均线
-
-    简介：利用收盘价的短期（常用为12日）指数移动平均线与长期（常用为26日）指数移动平均线之间的聚合与分离状况，对买进、卖出时机作出研判的技术指标。
-
-    分析和应用：
-    [百度百科](https://baike.baidu.com/item/MACD%E6%8C%87%E6%A0%87?fromtitle=MACD&fromid=3334786)
-    [维基百科](https://zh.wikipedia.org/wiki/MACD)
-    [同花顺学院](http://www.iwencai.com/school/search?cg=100&w=MACD)
-    :param series:
-    :param fast:
-    :param slow:
-    :param mid:
-    :return:
-    """
-    EMAFAST = EMA(series, fast)
-    EMASLOW = EMA(series, slow)
-    DIFF = EMAFAST - EMASLOW
-    DEA = EMA(DIFF, mid)
-    MACD = (DIFF - DEA) * 2
-
-    return pd.DataFrame({'DIFF': DIFF, 'DEA': DEA, 'MACD': MACD})
-
-
-def BBIBOLL(series, n1, n2, n3, n4, n, m):
-    """
-    多空布林线
-    :param series:
-    :param n1:
-    :param n2:
-    :param n3:
-    :param n4:
-    :param n:
-    :param m:
-    :return:
-    """
-
-    bbiboll = BBI(series, n1, n2, n3, n4)
-    UPER = bbiboll + m * STD(bbiboll, n)
-    DOWN = bbiboll - m * STD(bbiboll, n)
-    return pd.DataFrame({'BBIBOLL': bbiboll, 'UPER': UPER, 'DOWN': DOWN})
-
-
-def BBI(series, n1, n2, n3, n4):
-    """
-    多空指标
-    :param series:
-    :param n1:
-    :param n2:
-    :param n3:
-    :param n4:
-    :return:
-    """
-
-    bbi = (MA(series, n1) + MA(series, n2) +
-           MA(series, n3) + MA(series, n4)) / 4
-    return pd.DataFrame({'BBI': bbi})
-
-
-def BARLAST(cond, yes=True):
-    """
-    :param cond:
-    :param yes:
-    :return:
-    """
-    if isinstance(cond.index, pd.MultiIndex):
-        return len(cond) - cond.index.levels[0].tolist().index(cond[cond != yes].index[-1][0]) - 1
-    elif isinstance(cond.index, pd.DatetimeIndex):
-        return len(cond) - cond.index.tolist().index(cond[cond != yes].index[-1]) - 1
-
-
-def RSTD(series, n=250, m=10):
-    """
-    :param series:
-    :param n:
-    :param m:
-    :return:
-    """
-    return pd.rolling_std(series, span=n, min_periods=m)
-
-
-def DMA(data_frame, M1=10, M2=50, M3=10):
+def DMA(df, M1=10, M2=50, M3=10):
     """
     平均线差 DMA
-    :param data_frame:
+    :param df:
     :param M1:
     :param M2:
     :param M3:
     :return:
     """
-    CLOSE = data_frame['close']
+    CLOSE = df['close']
     DDD = MA(CLOSE, M1) - MA(CLOSE, M2)
     AMA = MA(DDD, M3)
     return pd.DataFrame({
         'DDD': DDD, 'AMA': AMA
     })
 
-
-def WINNER(series):
-    """
-    :param series:
-    :return:
-    """
-    return
-
-
-def DYNAINFO(series):
-    """
-    :param series:
-    :return:
-    """
-    return
-
-
-def CAPITAL():
-    """
-    :return:
-    """
-    return 1
-
-
-def AMOUNT():
-    """
-    :param series:
-    :return:
-    """
-    return 1
-
-
-def INDEXC():
-    """
-    :return:
-    """
-    return 1
-
-
-def ADVANCE():
-    """
-    :return:
-    """
-    return 1
-
-
-def DECLINE():
-    """
-    :return:
-    """
-    return 1
+# def HSL(df, N=5):
+#     """
+#     换手线
+#     :param df:
+#     :param N:
+#     :return:
+#     """
+#
+#     VOL = df['volume']
+#     HSL = IF((SETCODE == 0 or SETCODE == 1), 100 * VOL, VOL) / (FINANCE(7) / 100)
+#     MAHSL = MA(HSL, N)
+#     return pd.DataFrame({
+#         'HSL': HSL, 'MAHSL': MAHSL
+#     })

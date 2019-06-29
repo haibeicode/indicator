@@ -23,7 +23,7 @@ import talib
 ################
 
 
-def HT_DCPERIOD(data_frame):
+def HT_DCPERIOD(df):
     """
     函数名：HT_DCPERIOD
     名称： 希尔伯特变换-主导周期
@@ -37,11 +37,11 @@ def HT_DCPERIOD(data_frame):
     real=HT_DCPERIOD(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_DCPERIOD(close)
 
 
-def HT_DCPHASE(data_frame):
+def HT_DCPHASE(df):
     """
     函数名：HT_DCPHASE
     名称： 希尔伯特变换-主导循环阶段
@@ -50,11 +50,11 @@ def HT_DCPHASE(data_frame):
     real=HT_DCPHASE(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_DCPHASE(close)
 
 
-def HT_PHASOR(data_frame):
+def HT_PHASOR(df):
     """
     函数名：HT_DCPHASE
     名称： 希尔伯特变换-希尔伯特变换相量分量
@@ -63,11 +63,11 @@ def HT_PHASOR(data_frame):
     inphase, quadrature=HT_PHASOR(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_PHASOR(close)
 
 
-def HT_SINE(data_frame):
+def HT_SINE(df):
     """
     函数名：HT_DCPHASE
     名称： 希尔伯特变换-正弦波
@@ -76,11 +76,11 @@ def HT_SINE(data_frame):
     sine, leadsine=HT_SINE(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_SINE(close)
 
 
-def HT_TRENDMODE(data_frame):
+def HT_TRENDMODE(df):
     """
     函数名：HT_DCPHASE
     名称： 希尔伯特变换-趋势与周期模式
@@ -89,7 +89,7 @@ def HT_TRENDMODE(data_frame):
     integer=HT_TRENDMODE(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_TRENDMODE(close)
 
 
@@ -100,7 +100,7 @@ def HT_TRENDMODE(data_frame):
 #################
 
 
-def ADD(data_frame):
+def ADD(df):
     """
     函数名：ADD
     名称：向量加法运算
@@ -109,12 +109,12 @@ def ADD(data_frame):
     real=ADD(high, low)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.ADD(high, low)
 
 
-def DIV(data_frame):
+def DIV(df):
     """
     函数名：DIV
     名称：向量除法运算
@@ -123,12 +123,12 @@ def DIV(data_frame):
     real=DIV(high, low)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.DIV(high, low)
 
 
-def MAXINDEX(data_frame, time_period=30):
+def MAXINDEX(df, time_period=30):
     """
     函数名：MAXINDEX
     名称：周期内最大值的索引
@@ -138,11 +138,11 @@ def MAXINDEX(data_frame, time_period=30):
     :param time_period:
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MAXINDEX(close, timeperiod=time_period)
 
 
-def MININDEX(data_frame, time_period=30):
+def MININDEX(df, time_period=30):
     """
     函数名：MININDEX
     名称：周期内最小值的索引
@@ -151,11 +151,11 @@ def MININDEX(data_frame, time_period=30):
     integer=MININDEX(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MININDEX(close, timeperiod=time_period)
 
 
-def MINMAX(data_frame, time_period=30):
+def MINMAX(df, time_period=30):
     """
     函数名：MINMAX
     名称：周期内最小值和最大值(返回元组`元组（array【最小】，array【最大】）)
@@ -164,11 +164,11 @@ def MINMAX(data_frame, time_period=30):
     min, max=MINMAX(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MINMAX(close, timeperiod=time_period)
 
 
-def MINMAXINDEX(data_frame, time_period=30):
+def MINMAXINDEX(df, time_period=30):
     """
     函数名：MINMAX
     名称：周期内最小值和最大值索引(返回元组`元组（array【最小】，array【最大】）)
@@ -177,11 +177,11 @@ def MINMAXINDEX(data_frame, time_period=30):
     minidx, maxidx=MINMAXINDEX(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MINMAXINDEX(close, timeperiod=time_period)
 
 
-def MULT(data_frame):
+def MULT(df):
     """
     函数名：MULT
     名称：向量乘法运算
@@ -190,12 +190,12 @@ def MULT(data_frame):
     real=MULT(high, low)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.MULT(high, low)
 
 
-def SUB(data_frame):
+def SUB(df):
     """
     函数名：SUB
     名称：向量减法运算
@@ -204,8 +204,8 @@ def SUB(data_frame):
     real=SUB(high, low)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.SUB(high, low)
 
 
@@ -215,7 +215,7 @@ def SUB(data_frame):
 ################
 
 
-def ACOS(data_frame):
+def ACOS(df):
     """
     函数名：ACOS
     名称：acos函数是反余弦函数，三角函数
@@ -224,11 +224,11 @@ def ACOS(data_frame):
     real=ACOS(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ACOS(close)
 
 
-def ASIN(data_frame):
+def ASIN(df):
     """
     函数名：ASIN
     名称：反正弦函数，三角函数
@@ -237,11 +237,11 @@ def ASIN(data_frame):
     real=ASIN(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ASIN(close)
 
 
-def ATAN(data_frame):
+def ATAN(df):
     """
     函数名：ASIN
     名称：数字的反正切值，三角函数
@@ -250,11 +250,11 @@ def ATAN(data_frame):
     real=ATAN(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ATAN(close)
 
 
-def CEIL(data_frame):
+def CEIL(df):
     """
     函数名：CEIL
     简介：向上取整数
@@ -263,11 +263,11 @@ def CEIL(data_frame):
     real=CEIL(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.CEIL(close)
 
 
-def COS(data_frame):
+def COS(df):
     """
     函数名：COS
     名称：余弦函数，三角函数
@@ -276,11 +276,11 @@ def COS(data_frame):
     real=COS(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.COS(close)
 
 
-def COSH(data_frame):
+def COSH(df):
     """
     函数名：COSH
     名称：双曲正弦函数，三角函数
@@ -289,11 +289,11 @@ def COSH(data_frame):
     real=COSH(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.COSH(close)
 
 
-def EXP(data_frame):
+def EXP(df):
     """
     函数名：EXP
     名称：指数曲线，三角函数
@@ -302,11 +302,11 @@ def EXP(data_frame):
     real=EXP(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.EXP(close)
 
 
-def FLOOR(data_frame):
+def FLOOR(df):
     """
     函数名：FLOOR
     名称：向下取整数
@@ -315,11 +315,11 @@ def FLOOR(data_frame):
     real=FLOOR(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.FLOOR(close)
 
 
-def LN(data_frame):
+def LN(df):
     """
     函数名：LN
     名称：自然对数
@@ -328,11 +328,11 @@ def LN(data_frame):
     real=LN(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LN(close)
 
 
-def LOG10(data_frame):
+def LOG10(df):
     """
     函数名：LOG10
     名称：对数函数log
@@ -341,11 +341,11 @@ def LOG10(data_frame):
     real=LOG10(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LOG10(close)
 
 
-def SIN(data_frame):
+def SIN(df):
     """
     函数名：SIN
     名称：正弦函数，三角函数
@@ -354,11 +354,11 @@ def SIN(data_frame):
     real=SIN(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.SIN(close)
 
 
-def SINH(data_frame):
+def SINH(df):
     """
     函数名：SINH
     名称：双曲正弦函数，三角函数
@@ -367,11 +367,11 @@ def SINH(data_frame):
     real=SINH(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.SINH(close)
 
 
-def SQRT(data_frame):
+def SQRT(df):
     """
      函数名：SQRT
     名称：非负实数的平方根
@@ -380,11 +380,11 @@ def SQRT(data_frame):
     real=SQRT(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.SQRT(close)
 
 
-def TAN(data_frame):
+def TAN(df):
     """
     函数名：TAN
     名称：正切函数，三角函数
@@ -393,11 +393,11 @@ def TAN(data_frame):
     real=TAN(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TAN(close)
 
 
-def TANH(data_frame):
+def TANH(df):
     """
     函数名：TANH
     名称：双曲正切函数，三角函数
@@ -406,7 +406,7 @@ def TANH(data_frame):
     real=TANH(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TANH(close)
 
 
@@ -417,7 +417,7 @@ def TANH(data_frame):
 #################
 
 
-def ADX(data_frame, time_period=14):
+def ADX(df, time_period=14):
     """
     函数名：ADX
     名称：平均趋向指数
@@ -463,13 +463,13 @@ def ADX(data_frame, time_period=14):
     real=ADX(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.ADX(high, low, close, timeperiod=time_period)
 
 
-def ACCER(data_frame, N=8):
+def ACCER(df, N=8):
     """
     幅度涨速
 
@@ -480,15 +480,15 @@ def ACCER(data_frame, N=8):
     幅度涨速
     算法：
     先求出斜率，再对其价格进行归一
-    :param data_frame:
+    :param df:
     :param N:
     :return:
     """
-    CLOSE = data_frame['close']
+    CLOSE = df['close']
     return talib.LINEARREG_SLOPE(CLOSE, timeperiod=N)
 
 
-def ADXR(data_frame, time_period=14):
+def ADXR(df, time_period=14):
     """
     函数名：ADXR
     名称：平均趋向指数的趋向指数
@@ -499,23 +499,23 @@ def ADXR(data_frame, time_period=14):
     real=ADXR(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.ADXR(high, low, close, timeperiod=time_period)
 
 
-def APO(data_frame, fast_period=12, slow_period=26, ma_type=0):
+def APO(df, fast_period=12, slow_period=26, ma_type=0):
     """
     python API
     real=APO(close, fastperiod=12, slowperiod=26, matype=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.APO(close, fastperiod=fast_period, slowperiod=slow_period, matype=ma_type)
 
 
-def AROON(data_frame, time_period=14):
+def AROON(df, time_period=14):
     """
     函数名：AROON
     名称：阿隆指标
@@ -535,12 +535,12 @@ def AROON(data_frame, time_period=14):
     aroondown, aroonup=AROON(high, low, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.AROON(high, low, timeperiod=time_period)
 
 
-def AROONOSC(data_frame, time_period=14):
+def AROONOSC(df, time_period=14):
     """
     函数名：AROONOSC
     名称：阿隆振荡
@@ -549,12 +549,12 @@ def AROONOSC(data_frame, time_period=14):
     real=AROONOSC(high, low, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.AROONOSC(high, low, timeperiod=time_period)
 
 
-def BOP(data_frame):
+def BOP(df):
     """
     函数名：BOP
     名称：均势指标
@@ -563,13 +563,13 @@ def BOP(data_frame):
     real=BOP(open, high, low, close)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.BOP(open, high, low, close)
 
 
-def CMO(data_frame, time_period=14):
+def CMO(df, time_period=14):
     """
     函数名：CMO
     名称：钱德动量摆动指标
@@ -592,11 +592,11 @@ def CMO(data_frame, time_period=14):
     real=CMO(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.CMO(close, timeperiod=time_period)
 
 
-def DX(data_frame, time_period=14):
+def DX(df, time_period=14):
     """
     函数名：DX
     名称：动向指标或趋向指标
@@ -612,13 +612,13 @@ def DX(data_frame, time_period=14):
     real=DX(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.DX(high, low, close, timeperiod=time_period)
 
 
-def MACDEXT(data_frame, fast_period=12, fast_ma_type=0, slow_period=26, slow_ma_type=0, signal_period=9,
+def MACDEXT(df, fast_period=12, fast_ma_type=0, slow_period=26, slow_ma_type=0, signal_period=9,
             signal_ma_type=0):
     """
     函数名：MACDEXT
@@ -628,23 +628,23 @@ def MACDEXT(data_frame, fast_period=12, fast_ma_type=0, slow_period=26, slow_ma_
     macd, macdsignal, macdhist=MACDEXT(close, fastperiod=12, fastmatype=0, slowperiod=26, slowmatype=0, signalperiod=9, signalmatype=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MACDEXT(close, fastperiod=fast_period, fastmatype=fast_ma_type,
                          slowperiod=slow_period, slowmatype=slow_ma_type,
                          signalperiod=signal_period, signalmatype=signal_ma_type)
 
 
-def MACDFIX(data_frame, signal_period=9):
+def MACDFIX(df, signal_period=9):
     """
     python API
     macd, macdsignal, macdhist=MACDFIX(close, signalperiod=9)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MACDFIX(close, signalperiod=signal_period)
 
 
-def MFI(data_frame, time_period=14):
+def MFI(df, time_period=14):
     """
     函数名：MFI
     名称：资金流量指标
@@ -659,14 +659,14 @@ def MFI(data_frame, time_period=14):
     real=MFI(high, low, close, volume, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
-    volume = data_frame['volume']
+    high = df['high']
+    low = df['low']
+    close = df['close']
+    volume = df['volume']
     return talib.MFI(high, low, close, volume, timeperiod=time_period)
 
 
-def MINUS_DI(data_frame, time_period=14):
+def MINUS_DI(df, time_period=14):
     """
     函数名：DMI
     中的DI指标
@@ -684,13 +684,13 @@ def MINUS_DI(data_frame, time_period=14):
     real=MINUS_DI(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.MINUS_DI(high, low, close, timeperiod=time_period)
 
 
-def MINUS_DM(data_frame, time_period=14):
+def MINUS_DM(df, time_period=14):
     """
     函数名：MINUS_DM
     名称： 上升动向值
@@ -707,12 +707,12 @@ def MINUS_DM(data_frame, time_period=14):
     real=MINUS_DM(high, low, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.MINUS_DM(high, low, timeperiod=time_period)
 
 
-def MOM(data_frame, time_period=14):
+def MOM(df, time_period=14):
     """
     函数名：MOM
     名称： 上升动向值
@@ -727,11 +727,11 @@ def MOM(data_frame, time_period=14):
     real=MOM(close, timeperiod=10)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MOM(close, timeperiod=time_period)
 
 
-def PLUS_DI(data_frame, time_period=14):
+def PLUS_DI(df, time_period=14):
     """
     +DI 最高价上涨的次数
     + di是真实范围的百分比。di是真实范围下降的百分比。当+ di越过di时，生成一个买入信号。当di越过+ di时，产生一个卖出信号。你应该等到交易进入极限点为止。也就是说，你应该等待进入一个长期的交易，直到价格达到高的酒吧上di di越过di，并等待进入短期贸易，直到价格达到低的酒吧上的di越过+ di。
@@ -739,24 +739,24 @@ def PLUS_DI(data_frame, time_period=14):
     real=PLUS_DI(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.PLUS_DI(high, low, close, timeperiod=time_period)
 
 
-def PLUS_DM(data_frame, time_period=14):
+def PLUS_DM(df, time_period=14):
     """
     python API
     real=PLUS_DM(high, low, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.PLUS_DM(high, low, timeperiod=time_period)
 
 
-def PPO(data_frame, fast_period=12, slow_period=26, ma_type=0):
+def PPO(df, fast_period=12, slow_period=26, ma_type=0):
     """
     函数名：PPO
     名称： 价格震荡百分比指数
@@ -770,11 +770,11 @@ def PPO(data_frame, fast_period=12, slow_period=26, ma_type=0):
     real=PPO(close, fastperiod=12, slowperiod=26, matype=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.PPO(close, fastperiod=fast_period, slowperiod=slow_period, matype=ma_type)
 
 
-def ROC(data_frame, time_period=10):
+def ROC(df, time_period=10):
     """
     函数名：ROC
     名称： 变动率指标
@@ -789,41 +789,41 @@ def ROC(data_frame, time_period=10):
     real=ROC(close, timeperiod=10)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ROC(close, timeperiod=time_period)
 
 
-def ROCP(data_frame, time_period=10):
+def ROCP(df, time_period=10):
     """
     python API
     real=ROCP(close, timeperiod=10)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ROCP(close, timeperiod=time_period)
 
 
-def ROCR(data_frame, time_period=10):
+def ROCR(df, time_period=10):
     """
     python API
     real=ROCR(close, timeperiod=10)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ROCR(close, timeperiod=time_period)
 
 
-def ROCR100(data_frame, time_period=10):
+def ROCR100(df, time_period=10):
     """
     python API
     real=ROCR100(close, timeperiod=10)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.ROCR100(close, timeperiod=time_period)
 
 
-def RSI(data_frame, time_period=14):
+def RSI(df, time_period=14):
     """
     函数名：RSI
     名称：相对强弱指数
@@ -839,11 +839,11 @@ def RSI(data_frame, time_period=14):
     real=RSI(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.RSI(close, timeperiod=time_period)
 
 
-def STOCH(data_frame, fastk_period=5, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0):
+def STOCH(df, fastk_period=5, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0):
     """
     函数名：STOCH
     名称：随机指标, 俗称KD
@@ -852,48 +852,48 @@ def STOCH(data_frame, fastk_period=5, slowk_period=3, slowk_matype=0, slowd_peri
     slowk, slowd=STOCH(high, low, close, fastk_period=5, slowk_period=3, slowk_matype=0, slowd_period=3, slowd_matype=0)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.STOCH(high, low, close, fastk_period=fastk_period, slowk_period=slowk_period,
                        slowk_matype=slowk_matype, slowd_period=slowd_period, slowd_matype=slowd_matype)
 
 
-def STOCHF(data_frame, fastk_period=5, fastd_period=3, fastd_matype=0):
+def STOCHF(df, fastk_period=5, fastd_period=3, fastd_matype=0):
     """
     python API
     fastk, fastd=STOCHF(high, low, close, fastk_period=5, fastd_period=3, fastd_matype=0)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.STOCHF(high, low, close, fastk_period=fastk_period, fastd_period=fastd_period,
                         fastd_matype=fastd_matype)
 
 
-def STOCHRSI(data_frame, time_period=14, fastk_period=5, fastd_period=3, fastd_matype=0):
+def STOCHRSI(df, time_period=14, fastk_period=5, fastd_period=3, fastd_matype=0):
     """
      python API
     fastk, fastd=STOCHRSI(close, timeperiod=14, fastk_period=5, fastd_period=3, fastd_matype=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.STOCHRSI(close, timeperiod=time_period, fastk_period=fastk_period, fastd_period=fastd_period,
                           fastd_matype=fastd_matype)
 
 
-def TRIX(data_frame, time_period=30):
+def TRIX(df, time_period=30):
     """
     python API
     real=TRIX(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TRIX(close, timeperiod=time_period)
 
 
-def ULTOSC(data_frame, time_period1=7, time_period2=14, time_period3=28):
+def ULTOSC(df, time_period1=7, time_period2=14, time_period3=28):
     """
     函数名：ULTOSC
     名称：终极波动指标
@@ -908,13 +908,13 @@ def ULTOSC(data_frame, time_period1=7, time_period2=14, time_period3=28):
     real=ULTOSC(high, low, close, timeperiod1=7, timeperiod2=14, timeperiod3=28)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.ULTOSC(high, low, close, timeperiod1=time_period1, timeperiod2=time_period2, timeperiod3=time_period3)
 
 
-def WILLR(data_frame, time_period=14):
+def WILLR(df, time_period=14):
     """
     函数名：WILLR
     名称：威廉指标
@@ -930,9 +930,9 @@ def WILLR(data_frame, time_period=14):
     real=WILLR(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.WILLR(high, low, close, timeperiod=time_period)
 
 
@@ -943,7 +943,7 @@ def WILLR(data_frame, time_period=14):
 #################
 
 
-def BBANDS(data_frame, time_period=5, nb_de_vup=2, nb_dev_dn=2, ma_type=0):
+def BBANDS(df, time_period=5, nb_de_vup=2, nb_dev_dn=2, ma_type=0):
     """
     函数名：BBANDS
 
@@ -958,11 +958,11 @@ def BBANDS(data_frame, time_period=5, nb_de_vup=2, nb_dev_dn=2, ma_type=0):
     upperband, middleband, lowerband=BBANDS(close, timeperiod=5, nbdevup=2, nbdevdn=2, matype=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.BBANDS(close, timeperiod=time_period, nbdevup=nb_de_vup, nbdevdn=nb_dev_dn, matype=ma_type)
 
 
-def DEMA(data_frame, time_period=30):
+def DEMA(df, time_period=30):
     """
     函数名：DEMA
 
@@ -977,11 +977,11 @@ def DEMA(data_frame, time_period=30):
     real=DEMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.DEMA(close, timeperiod=time_period)
 
 
-def HT_TRENDLINE(data_frame):
+def HT_TRENDLINE(df):
     """
     函数名：HT_TRENDLINE
     名称： 希尔伯特瞬时变换
@@ -995,11 +995,11 @@ def HT_TRENDLINE(data_frame):
     real=HT_TRENDLINE(close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.HT_TRENDLINE(close)
 
 
-def KAMA(data_frame, time_period=30):
+def KAMA(df, time_period=30):
     """
     函数名：KAMA
     名称： 考夫曼的自适应移动平均线
@@ -1016,55 +1016,55 @@ def KAMA(data_frame, time_period=30):
     real=KAMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.KAMA(close, timeperiod=time_period)
 
 
-def MAMA(data_frame, fast_limit=0, slow_limit=0):
+def MAMA(df, fast_limit=0, slow_limit=0):
     """
     python API
     mama, fama=MAMA(close, fastlimit=0, slowlimit=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MAMA(close, fastlimit=fast_limit, slowlimit=slow_limit)
 
 
-def MAVP(data_frame, min_period=2, max_period=30, ma_type=0):
+def MAVP(df, min_period=2, max_period=30, ma_type=0):
     """
      python API
     real=MAVP(close, periods, minperiod=2, maxperiod=30, matype=0)
     :return:
     """
-    close = data_frame['close']
-    low = data_frame['low']
+    close = df['close']
+    low = df['low']
     return talib.MAVP(close, low, minperiod=min_period, maxperiod=max_period, matype=ma_type)
 
 
-def MIDPOINT(data_frame, time_period=14):
+def MIDPOINT(df, time_period=14):
     """
     python API
     real=MIDPOINT(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.MIDPOINT(close, timeperiod=time_period)
 
 
-def MIDPRICE(data_frame, time_period=14):
+def MIDPRICE(df, time_period=14):
     """
     python API
     real=MIDPRICE(high, low, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.MIDPRICE(high, low, timeperiod=time_period)
 
 
-def SAR(data_frame, acceler_ation=0, max_imum=0):
+def SAR(df, acceler_ation=0, max_imum=0):
     """
-     函数名：SAR
+    函数名：SAR
     名称： 抛物线指标
 
     简介：抛物线转向也称停损点转向，是利用抛物线方式，随时调整停损点位置以观察买卖点。由于停损点（又称转向点SAR）以弧形的方式移动，故称之为抛物线转向指标。
@@ -1077,12 +1077,12 @@ def SAR(data_frame, acceler_ation=0, max_imum=0):
     real=SAR(high, low, acceleration=0, maximum=0)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.SAR(high, low, acceleration=acceler_ation, maximum=max_imum)
 
 
-def SAREXT(data_frame, start_value=0, offset_onreverse=0, acceleration_init_long=0, acceleration_long=0,
+def SAREXT(df, start_value=0, offset_onreverse=0, acceleration_init_long=0, acceleration_long=0,
            acceleration_max_long=0,
            acceleration_init_short=0, acceleration_short=0,
            acceleration_max_short=0):
@@ -1091,15 +1091,15 @@ def SAREXT(data_frame, start_value=0, offset_onreverse=0, acceleration_init_long
     real=SAREXT(high, low, startvalue=0, offsetonreverse=0, accelerationinitlong=0, accelerationlong=0, accelerationmaxlong=0, accelerationinitshort=0, accelerationshort=0, accelerationmaxshort=0)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.SAREXT(high, low, startvalue=start_value, offsetonreverse=offset_onreverse,
                         accelerationinitlong=acceleration_init_long, accelerationlong=acceleration_long,
                         accelerationmaxlong=acceleration_max_long, accelerationinitshort=acceleration_init_short,
                         accelerationshort=acceleration_short, accelerationmaxshort=acceleration_max_short)
 
 
-def SMA(data_frame, time_period=30):
+def SMA(df, time_period=30):
     """
     函数名：SMA
     名称： 简单移动平均线
@@ -1114,11 +1114,11 @@ def SMA(data_frame, time_period=30):
     real=SMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.SMA(close, timeperiod=time_period)
 
 
-def T3(data_frame, time_period=5, v_factor=0):
+def T3(df, time_period=5, v_factor=0):
     """
     函数名：T3
     名称：三重指数移动平均线
@@ -1133,11 +1133,11 @@ def T3(data_frame, time_period=5, v_factor=0):
     real=T3(close, timeperiod=5, vfactor=0)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.T3(close, timeperiod=time_period, vfactor=v_factor)
 
 
-def TEMA(data_frame, time_period=30):
+def TEMA(df, time_period=30):
     """
     函数名：TEMA（T3 区别？）
     名称：三重指数移动平均线
@@ -1146,21 +1146,21 @@ def TEMA(data_frame, time_period=30):
     real=TEMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TEMA(close, timeperiod=time_period)
 
 
-def TRIMA(data_frame, time_period=30):
+def TRIMA(df, time_period=30):
     """
     python API
     real=TRIMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TRIMA(close, timeperiod=time_period)
 
 
-def WMA(data_frame, time_period=30):
+def WMA(df, time_period=30):
     """
     函数名：WMA
     名称：加权移动平均线
@@ -1175,7 +1175,7 @@ def WMA(data_frame, time_period=30):
     real=WMA(close, timeperiod=30)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.WMA(close, timeperiod=time_period)
 
 
@@ -1186,7 +1186,7 @@ def WMA(data_frame, time_period=30):
 #################
 
 
-def CDL2CROWS(data_frame):
+def CDL2CROWS(df):
     """
     函数名：CDL2CROWS
     名称：Two Crows 两只乌鸦
@@ -1197,14 +1197,14 @@ def CDL2CROWS(data_frame):
     integer=CDL2CROWS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL2CROWS(open, high, low, close)
 
 
-def CDL3BLACKCROWS(data_frame):
+def CDL3BLACKCROWS(df):
     """
     函数名：CDL3BLACKCROWS
     名称：Three Black Crows 三只乌鸦
@@ -1213,17 +1213,17 @@ def CDL3BLACKCROWS(data_frame):
 
     python API
     integer=CDL3BLACKCROWS(open, high, low, close)
-    :param data_frame:
+    :param df:
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3BLACKCROWS(open, high, low, close)
 
 
-def CDL3INSIDE(data_frame):
+def CDL3INSIDE(df):
     """
     函数名：CDL3INSIDE
     名称： Three Inside Up/Down 三内部上涨和下跌
@@ -1234,14 +1234,14 @@ def CDL3INSIDE(data_frame):
     integer=CDL3INSIDE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3INSIDE(open, high, low, close)
 
 
-def CDL3LINESTRIKE(data_frame):
+def CDL3LINESTRIKE(df):
     """
     函数名：CDL3LINESTRIKE
     名称： Three - Line Strike 三线打击
@@ -1252,14 +1252,14 @@ def CDL3LINESTRIKE(data_frame):
     integer=CDL3LINESTRIKE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3LINESTRIKE(open, high, low, close)
 
 
-def CDL3OUTSIDE(data_frame):
+def CDL3OUTSIDE(df):
     """
     函数名：CDL3OUTSIDE
     名称：Three Outside Up/Down 三外部上涨和下跌
@@ -1270,14 +1270,14 @@ def CDL3OUTSIDE(data_frame):
     integer=CDL3OUTSIDE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3OUTSIDE(open, high, low, close)
 
 
-def CDL3STARSINSOUTH(data_frame):
+def CDL3STARSINSOUTH(df):
     """
     函数名：CDL3STARSINSOUTH
     名称：Three Stars In The South 南方三星
@@ -1288,14 +1288,14 @@ def CDL3STARSINSOUTH(data_frame):
     integer=CDL3STARSINSOUTH(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3STARSINSOUTH(open, high, low, close)
 
 
-def CDL3WHITESOLDIERS(data_frame):
+def CDL3WHITESOLDIERS(df):
     """
     函数名：CDL3WHITESOLDIERS
     名称：Three Advancing White Soldiers 三个白兵
@@ -1306,14 +1306,14 @@ def CDL3WHITESOLDIERS(data_frame):
     integer=CDL3WHITESOLDIERS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDL3WHITESOLDIERS(open, high, low, close)
 
 
-def CDLABANDONEDBABY(data_frame):
+def CDLABANDONEDBABY(df):
     """
     函数名：CDLABANDONEDBABY
     名称：Abandoned Baby 弃婴
@@ -1324,14 +1324,14 @@ def CDLABANDONEDBABY(data_frame):
     integer=CDLABANDONEDBABY(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLABANDONEDBABY(open, high, low, close)
 
 
-def CDLADVANCEBLOCK(data_frame):
+def CDLADVANCEBLOCK(df):
     """
     函数名：CDLADVANCEBLOCK
     名称：Advance Block 大敌当前
@@ -1342,14 +1342,14 @@ def CDLADVANCEBLOCK(data_frame):
     integer=CDLADVANCEBLOCK(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLADVANCEBLOCK(open, high, low, close)
 
 
-def CDLBELTHOLD(data_frame):
+def CDLBELTHOLD(df):
     """
     函数名：CDLBELTHOLD
     名称：Belt - hold 捉腰带线
@@ -1360,14 +1360,14 @@ def CDLBELTHOLD(data_frame):
     integer=CDLBELTHOLD(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLBELTHOLD(open, high, low, close)
 
 
-def CDLBREAKAWAY(data_frame):
+def CDLBREAKAWAY(df):
     """
     函数名：CDLBREAKAWAY
     名称：Breakaway 脱离
@@ -1377,14 +1377,14 @@ def CDLBREAKAWAY(data_frame):
     integer=CDLBREAKAWAY(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLBREAKAWAY(open, high, low, close)
 
 
-def CDLCLOSINGMARUBOZU(data_frame):
+def CDLCLOSINGMARUBOZU(df):
     """
     函数名：CDLCLOSINGMARUBOZU
     名称：Closing Marubozu 收盘缺影线
@@ -1395,14 +1395,14 @@ def CDLCLOSINGMARUBOZU(data_frame):
     integer=CDLCLOSINGMARUBOZU(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLCLOSINGMARUBOZU(open, high, low, close)
 
 
-def CDLCONCEALBABYSWALL(data_frame):
+def CDLCONCEALBABYSWALL(df):
     """
      函数名：CDLCONCEALBABYSWALL
     名称： Concealing Baby Swallow 藏婴吞没
@@ -1413,14 +1413,14 @@ def CDLCONCEALBABYSWALL(data_frame):
     integer=CDLCONCEALBABYSWALL(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLCONCEALBABYSWALL(open, high, low, close)
 
 
-def CDLCOUNTERATTACK(data_frame):
+def CDLCOUNTERATTACK(df):
     """
     函数名：CDLCOUNTERATTACK
     名称：Counterattack 反击线
@@ -1430,14 +1430,14 @@ def CDLCOUNTERATTACK(data_frame):
     integer=CDLCOUNTERATTACK(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLCOUNTERATTACK(open, high, low, close)
 
 
-def CDLDARKCLOUDCOVER(data_frame):
+def CDLDARKCLOUDCOVER(df):
     """
     函数名：CDLDARKCLOUDCOVER
     名称：Dark Cloud Cover 乌云压顶
@@ -1448,14 +1448,14 @@ def CDLDARKCLOUDCOVER(data_frame):
     integer=CDLDARKCLOUDCOVER(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLDARKCLOUDCOVER(open, high, low, close)
 
 
-def CDLDOJI(data_frame):
+def CDLDOJI(df):
     """
     函数名：CDLDOJI
     名称：Doji 十字
@@ -1466,14 +1466,14 @@ def CDLDOJI(data_frame):
     integer=CDLDOJI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLDOJI(open, high, low, close)
 
 
-def CDLDOJISTAR(data_frame):
+def CDLDOJISTAR(df):
     """
     函数名：CDLDOJISTAR
     名称：Doji Star 十字星
@@ -1483,14 +1483,14 @@ def CDLDOJISTAR(data_frame):
     integer=CDLDOJISTAR(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLDOJISTAR(open, high, low, close)
 
 
-def CDLDRAGONFLYDOJI(data_frame):
+def CDLDRAGONFLYDOJI(df):
     """
     函数名：CDLDRAGONFLYDOJI
     名称：Dragonfly Doji
@@ -1502,14 +1502,14 @@ def CDLDRAGONFLYDOJI(data_frame):
     integer=CDLDRAGONFLYDOJI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLDRAGONFLYDOJI(open, high, low, close)
 
 
-def CDLENGULFING(data_frame):
+def CDLENGULFING(df):
     """
     函数名：CDLENGULFING
     名称：Engulfing Pattern 吞噬模式
@@ -1520,14 +1520,14 @@ def CDLENGULFING(data_frame):
     integer=CDLENGULFING(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLENGULFING(open, high, low, close)
 
 
-def CDLEVENINGDOJISTAR(data_frame):
+def CDLEVENINGDOJISTAR(df):
     """
     函数名：CDLEVENINGDOJISTAR
     名称：Evening Doji Star 十字暮星
@@ -1538,14 +1538,14 @@ def CDLEVENINGDOJISTAR(data_frame):
     integer=CDLEVENINGDOJISTAR(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLEVENINGDOJISTAR(open, high, low, close)
 
 
-def CDLEVENINGSTAR(data_frame):
+def CDLEVENINGSTAR(df):
     """
     函数名：CDLEVENINGSTAR
     名称：Evening Star 暮星
@@ -1556,14 +1556,14 @@ def CDLEVENINGSTAR(data_frame):
     integer=CDLEVENINGSTAR(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLEVENINGSTAR(open, high, low, close)
 
 
-def CDLGAPSIDESIDEWHITE(data_frame):
+def CDLGAPSIDESIDEWHITE(df):
     """
     函数名：CDLGAPSIDESIDEWHITE
     名称：Up/Down - gap side - by - side white lines 向上/下跳空并列阳线
@@ -1574,14 +1574,14 @@ def CDLGAPSIDESIDEWHITE(data_frame):
     integer=CDLGAPSIDESIDEWHITE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLGAPSIDESIDEWHITE(open, high, low, close)
 
 
-def CDLGRAVESTONEDOJI(data_frame):
+def CDLGRAVESTONEDOJI(df):
     """
     函数名：CDLGRAVESTONEDOJI
     名称：Gravestone Doji 墓碑十字/倒T十字
@@ -1592,14 +1592,14 @@ def CDLGRAVESTONEDOJI(data_frame):
     integer=CDLGRAVESTONEDOJI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLGRAVESTONEDOJI(open, high, low, close)
 
 
-def CDLHAMMER(data_frame):
+def CDLHAMMER(df):
     """
     函数名：CDLHAMMER
     名称：Hammer 锤头
@@ -1610,14 +1610,14 @@ def CDLHAMMER(data_frame):
     integer=CDLHAMMER(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHAMMER(open, high, low, close)
 
 
-def CDLHANGINGMAN(data_frame):
+def CDLHANGINGMAN(df):
     """
     函数名：CDLHANGINGMAN
     名称：Hanging Man 上吊线
@@ -1628,14 +1628,14 @@ def CDLHANGINGMAN(data_frame):
     integer=CDLHANGINGMAN(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHANGINGMAN(open, high, low, close)
 
 
-def CDLHARAMI(data_frame):
+def CDLHARAMI(df):
     """
     函数名：CDLHARAMI
     名称：Harami Pattern 母子线
@@ -1646,14 +1646,14 @@ def CDLHARAMI(data_frame):
     integer=CDLHARAMI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHARAMI(open, high, low, close)
 
 
-def CDLHARAMICROSS(data_frame):
+def CDLHARAMICROSS(df):
     """
     函数名：CDLHARAMICROSS
     名称：Harami Cross Pattern 十字孕线
@@ -1664,14 +1664,14 @@ def CDLHARAMICROSS(data_frame):
     integer=CDLHARAMICROSS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHARAMICROSS(open, high, low, close)
 
 
-def CDLHIGHWAVE(data_frame):
+def CDLHIGHWAVE(df):
     """
     函数名：CDLHIGHWAVE
     名称：High - Wave Candle 风高浪大线
@@ -1682,11 +1682,11 @@ def CDLHIGHWAVE(data_frame):
     integer=CDLHIGHWAVE(open, high, low, close)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.CDLHIGHWAVE(open, high, low, close)
 
 
-def CDLHIKKAKE(data_frame):
+def CDLHIKKAKE(df):
     """
     函数名：CDLHIKKAKE
     名称：Hikkake Pattern 陷阱
@@ -1697,14 +1697,14 @@ def CDLHIKKAKE(data_frame):
     integer=CDLHIKKAKE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHIKKAKE(open, high, low, close)
 
 
-def CDLHIKKAKEMOD(data_frame):
+def CDLHIKKAKEMOD(df):
     """
     函数名：CDLHIKKAKEMOD
     名称：Modified Hikkake Pattern 修正陷阱
@@ -1715,14 +1715,14 @@ def CDLHIKKAKEMOD(data_frame):
     integer=CDLHIKKAKEMOD(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHIKKAKEMOD(open, high, low, close)
 
 
-def CDLHOMINGPIGEON(data_frame):
+def CDLHOMINGPIGEON(df):
     """
     函数名：CDLHOMINGPIGEON
     名称：Homing Pigeon 家鸽
@@ -1733,14 +1733,14 @@ def CDLHOMINGPIGEON(data_frame):
     integer=CDLHOMINGPIGEON(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLHOMINGPIGEON(open, high, low, close)
 
 
-def CDLIDENTICAL3CROWS(data_frame):
+def CDLIDENTICAL3CROWS(df):
     """
     函数名：CDLIDENTICAL3CROWS
     名称：Identical Three Crows 三胞胎乌鸦
@@ -1751,14 +1751,14 @@ def CDLIDENTICAL3CROWS(data_frame):
     integer=CDLIDENTICAL3CROWS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLIDENTICAL3CROWS(open, high, low, close)
 
 
-def CDLINNECK(data_frame):
+def CDLINNECK(df):
     """
     函数名：CDLINNECK
     名称：In - Neck Pattern 颈内线
@@ -1769,14 +1769,14 @@ def CDLINNECK(data_frame):
     integer=CDLINNECK(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLINNECK(open, high, low, close)
 
 
-def CDLINVERTEDHAMMER(data_frame):
+def CDLINVERTEDHAMMER(df):
     """
     函数名：CDLINVERTEDHAMMER
     名称：Inverted Hammer 倒锤头
@@ -1787,14 +1787,14 @@ def CDLINVERTEDHAMMER(data_frame):
     integer=CDLINVERTEDHAMMER(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLINVERTEDHAMMER(open, high, low, close)
 
 
-def CDLKICKING(data_frame):
+def CDLKICKING(df):
     """
     函数名：CDLKICKING
     名称：Kicking 反冲形态
@@ -1805,14 +1805,14 @@ def CDLKICKING(data_frame):
     integer=CDLKICKING(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLKICKING(open, high, low, close)
 
 
-def CDLKICKINGBYLENGTH(data_frame):
+def CDLKICKINGBYLENGTH(df):
     """
     函数名：CDLKICKINGBYLENGTH
     名称：Kicking - bull/bear determined by the longer marubozu 由较长缺影线决定的反冲形态
@@ -1823,14 +1823,14 @@ def CDLKICKINGBYLENGTH(data_frame):
     integer=CDLKICKINGBYLENGTH(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLKICKINGBYLENGTH(open, high, low, close)
 
 
-def CDLLADDERBOTTOM(data_frame):
+def CDLLADDERBOTTOM(df):
     """
     函数名：CDLLADDERBOTTOM
     名称：Ladder Bottom 梯底
@@ -1841,14 +1841,14 @@ def CDLLADDERBOTTOM(data_frame):
     integer=CDLLADDERBOTTOM(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLLADDERBOTTOM(open, high, low, close)
 
 
-def CDLLONGLEGGEDDOJI(data_frame):
+def CDLLONGLEGGEDDOJI(df):
     """
     函数名：CDLLONGLEGGEDDOJI
     名称：Long Legged Doji 长脚十字
@@ -1859,14 +1859,14 @@ def CDLLONGLEGGEDDOJI(data_frame):
     integer=CDLLONGLEGGEDDOJI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLLONGLEGGEDDOJI(open, high, low, close)
 
 
-def CDLLONGLINE(data_frame):
+def CDLLONGLINE(df):
     """
     函数名：CDLLONGLINE
     名称：Long Line Candle 长蜡烛
@@ -1876,14 +1876,14 @@ def CDLLONGLINE(data_frame):
     integer=CDLLONGLINE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLLONGLINE(open, high, low, close)
 
 
-def CDLMARUBOZU(data_frame):
+def CDLMARUBOZU(df):
     """
     函数名：CDLMARUBOZU
     名称：Marubozu 光头光脚/缺影线
@@ -1894,14 +1894,14 @@ def CDLMARUBOZU(data_frame):
     integer=CDLMARUBOZU(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLMARUBOZU(open, high, low, close)
 
 
-def CDLMATCHINGLOW(data_frame):
+def CDLMATCHINGLOW(df):
     """
     函数名：CDLMATCHINGLOW
     名称：Matching Low 相同低价
@@ -1912,14 +1912,14 @@ def CDLMATCHINGLOW(data_frame):
     integer=CDLMATCHINGLOW(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLMATCHINGLOW(open, high, low, close)
 
 
-def CDLMATHOLD(data_frame):
+def CDLMATHOLD(df):
     """
     函数名：CDLMATHOLD
     名称：Mat Hold 铺垫
@@ -1930,14 +1930,14 @@ def CDLMATHOLD(data_frame):
     integer=CDLMATHOLD(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLMATHOLD(open, high, low, close)
 
 
-def CDLMORNINGDOJISTAR(data_frame):
+def CDLMORNINGDOJISTAR(df):
     """
     函数名：CDLMORNINGDOJISTAR
     名称：Morning Doji Star 十字晨星
@@ -1948,14 +1948,14 @@ def CDLMORNINGDOJISTAR(data_frame):
     integer=CDLMORNINGDOJISTAR(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLMORNINGDOJISTAR(open, high, low, close)
 
 
-def CDLMORNINGSTAR(data_frame):
+def CDLMORNINGSTAR(df):
     """
     函数名：CDLMORNINGSTAR
     名称：Morning Star 晨星
@@ -1966,14 +1966,14 @@ def CDLMORNINGSTAR(data_frame):
     integer=CDLMORNINGSTAR(open, high, low, close, penetration=0)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLMORNINGSTAR(open, high, low, close)
 
 
-def CDLONNECK(data_frame):
+def CDLONNECK(df):
     """
     函数名：CDLONNECK
     名称：On - Neck Pattern 颈上线
@@ -1984,14 +1984,14 @@ def CDLONNECK(data_frame):
     integer=CDLONNECK(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLONNECK(open, high, low, close)
 
 
-def CDLPIERCING(data_frame):
+def CDLPIERCING(df):
     """
     函数名：CDLPIERCING
     名称：Piercing Pattern 刺透形态
@@ -2002,14 +2002,14 @@ def CDLPIERCING(data_frame):
     integer=CDLPIERCING(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLPIERCING(open, high, low, close)
 
 
-def CDLRICKSHAWMAN(data_frame):
+def CDLRICKSHAWMAN(df):
     """
     函数名：CDLRICKSHAWMAN
     名称：Rickshaw Man 黄包车夫
@@ -2020,14 +2020,14 @@ def CDLRICKSHAWMAN(data_frame):
     integer=CDLRICKSHAWMAN(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLRICKSHAWMAN(open, high, low, close)
 
 
-def CDLRISEFALL3METHODS(data_frame):
+def CDLRISEFALL3METHODS(df):
     """
      函数名：CDLRISEFALL3METHODS
     名称：Rising/Falling Three Methods 上升/下降三法
@@ -2038,14 +2038,14 @@ def CDLRISEFALL3METHODS(data_frame):
     integer=CDLRISEFALL3METHODS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLRISEFALL3METHODS(open, high, low, close)
 
 
-def CDLSEPARATINGLINES(data_frame):
+def CDLSEPARATINGLINES(df):
     """
      函数名：CDLSEPARATINGLINES
     名称：Separating Lines 分离线
@@ -2056,14 +2056,14 @@ def CDLSEPARATINGLINES(data_frame):
     integer=CDLSEPARATINGLINES(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSEPARATINGLINES(open, high, low, close)
 
 
-def CDLSHOOTINGSTAR(data_frame):
+def CDLSHOOTINGSTAR(df):
     """
     函数名：CDLSHOOTINGSTAR
     名称：Shooting Star 射击之星
@@ -2074,14 +2074,14 @@ def CDLSHOOTINGSTAR(data_frame):
     integer=CDLSHOOTINGSTAR(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSHOOTINGSTAR(open, high, low, close)
 
 
-def CDLSHORTLINE(data_frame):
+def CDLSHORTLINE(df):
     """
     函数名：CDLSHORTLINE
     名称：Short Line Candle 短蜡烛
@@ -2092,14 +2092,14 @@ def CDLSHORTLINE(data_frame):
     integer=CDLSHORTLINE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSHORTLINE(open, high, low, close)
 
 
-def CDLSPINNINGTOP(data_frame):
+def CDLSPINNINGTOP(df):
     """
     函数名：CDLSPINNINGTOP
     名称：Spinning Top 纺锤
@@ -2110,14 +2110,14 @@ def CDLSPINNINGTOP(data_frame):
     integer=CDLSPINNINGTOP(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSPINNINGTOP(open, high, low, close)
 
 
-def CDLSTALLEDPATTERN(data_frame):
+def CDLSTALLEDPATTERN(df):
     """
     函数名：CDLSTALLEDPATTERN
     名称：Stalled Pattern 停顿形态
@@ -2128,14 +2128,14 @@ def CDLSTALLEDPATTERN(data_frame):
     integer=CDLSTALLEDPATTERN(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSTALLEDPATTERN(open, high, low, close)
 
 
-def CDLSTICKSANDWICH(data_frame):
+def CDLSTICKSANDWICH(df):
     """
     函数名：CDLSTICKSANDWICH
     名称：Stick Sandwich 条形三明治
@@ -2146,14 +2146,14 @@ def CDLSTICKSANDWICH(data_frame):
     integer=CDLSTICKSANDWICH(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLSTICKSANDWICH(open, high, low, close)
 
 
-def CDLTAKURI(data_frame):
+def CDLTAKURI(df):
     """
     函数名：CDLTAKURI
     名称：Takuri(Dragonfly Doji with very long lower shadow) 探水竿
@@ -2163,14 +2163,14 @@ def CDLTAKURI(data_frame):
     integer=CDLTAKURI(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLTAKURI(open, high, low, close)
 
 
-def CDLTASUKIGAP(data_frame):
+def CDLTASUKIGAP(df):
     """
     函数名：CDLTASUKIGAP
     名称：Tasuki Gap 跳空并列阴阳线
@@ -2181,14 +2181,14 @@ def CDLTASUKIGAP(data_frame):
     integer=CDLTASUKIGAP(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLTASUKIGAP(open, high, low, close)
 
 
-def CDLTHRUSTING(data_frame):
+def CDLTHRUSTING(df):
     """
     函数名：CDLTHRUSTING
     名称：Thrusting Pattern 插入
@@ -2199,14 +2199,14 @@ def CDLTHRUSTING(data_frame):
     integer=CDLTHRUSTING(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLTHRUSTING(open, high, low, close)
 
 
-def CDLTRISTAR(data_frame):
+def CDLTRISTAR(df):
     """
     函数名：CDLTRISTAR
     名称：Tristar Pattern 三星
@@ -2217,14 +2217,14 @@ def CDLTRISTAR(data_frame):
     integer=CDLTRISTAR(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLTRISTAR(open, high, low, close)
 
 
-def CDLUNIQUE3RIVER(data_frame):
+def CDLUNIQUE3RIVER(df):
     """
     函数名：CDLUNIQUE3RIVER
     名称：Unique 3 River 奇特三河床
@@ -2235,14 +2235,14 @@ def CDLUNIQUE3RIVER(data_frame):
     integer=CDLUNIQUE3RIVER(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLUNIQUE3RIVER(open, high, low, close)
 
 
-def CDLUPSIDEGAP2CROWS(data_frame):
+def CDLUPSIDEGAP2CROWS(df):
     """
     函数名：CDLUPSIDEGAP2CROWS
     名称：Upside Gap Two Crows 向上跳空的两只乌鸦
@@ -2253,14 +2253,14 @@ def CDLUPSIDEGAP2CROWS(data_frame):
     integer=CDLUPSIDEGAP2CROWS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLUPSIDEGAP2CROWS(open, high, low, close)
 
 
-def CDLXSIDEGAP3METHODS(data_frame):
+def CDLXSIDEGAP3METHODS(df):
     """
     函数名：CDLXSIDEGAP3METHODS
     名称：Upside/Downside Gap Three Methods 上升/下降跳空三法
@@ -2271,10 +2271,10 @@ def CDLXSIDEGAP3METHODS(data_frame):
     integer=CDLXSIDEGAP3METHODS(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.CDLXSIDEGAP3METHODS(open, high, low, close)
 
 
@@ -2284,7 +2284,7 @@ def CDLXSIDEGAP3METHODS(data_frame):
 #################
 
 
-def AVGPRICE(data_frame):
+def AVGPRICE(df):
     """
     函数名：AVGPRICE
     名称：平均价格函数
@@ -2293,14 +2293,14 @@ def AVGPRICE(data_frame):
     real=AVGPRICE(open, high, low, close)
     :return:
     """
-    open = data_frame['open']
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    open = df['open']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.AVGPRICE(open, high, low, close)
 
 
-def MEDPRICE(data_frame):
+def MEDPRICE(df):
     """
     函数名：MEDPRICE
     名称：中位数价格
@@ -2309,12 +2309,12 @@ def MEDPRICE(data_frame):
     real=MEDPRICE(high, low)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.MEDPRICE(high, low)
 
 
-def TYPPRICE(data_frame):
+def TYPPRICE(df):
     """
     函数名：TYPPRICE
     名称：代表性价格
@@ -2323,13 +2323,13 @@ def TYPPRICE(data_frame):
     real=TYPPRICE(high, low, close)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.TYPPRICE(high, low, close)
 
 
-def WCLPRICE(data_frame):
+def WCLPRICE(df):
     """
     函数名：WCLPRICE
     名称：加权收盘价
@@ -2338,9 +2338,9 @@ def WCLPRICE(data_frame):
     real=WCLPRICE(high, low, close)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.WCLPRICE(high, low, close)
 
 
@@ -2351,7 +2351,7 @@ def WCLPRICE(data_frame):
 #################
 
 
-def BETA(data_frame, time_period=5):
+def BETA(df, time_period=5):
     """
     函数名：BETA
     名称：β系数也称为贝塔系数
@@ -2371,12 +2371,12 @@ def BETA(data_frame, time_period=5):
     real=BETA(high, low, timeperiod=5)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.BETA(high, low, timeperiod=time_period)
 
 
-def CORREL(data_frame, time_period=30):
+def CORREL(df, time_period=30):
     """
     函数名：CORREL
     名称：皮尔逊相关系数
@@ -2389,12 +2389,12 @@ def CORREL(data_frame, time_period=30):
     real=CORREL(high, low, timeperiod=30)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
+    high = df['high']
+    low = df['low']
     return talib.CORREL(high, low, timeperiod=time_period)
 
 
-def LINEARREG(data_frame, time_period=14):
+def LINEARREG(df, time_period=14):
     """
     直线回归方程：当两个变量x与y之间达到显著地线性相关关系时,应用最小二乘法原理确定一条最优直线的直线方程y=a+bx,这条回归直线与个相关点的距离比任何其他直线与相关点的距离都小,是最佳的理想直线.
     回归截距a：表示直线在y轴上的截距,代表直线的起点.
@@ -2410,11 +2410,11 @@ def LINEARREG(data_frame, time_period=14):
     real=LINEARREG(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LINEARREG(close, timeperiod=time_period)
 
 
-def LINEARREG_ANGLE(data_frame, time_period=14):
+def LINEARREG_ANGLE(df, time_period=14):
     """
     函数名：LINEARREG_ANGLE
     名称：线性回归的角度
@@ -2426,11 +2426,11 @@ def LINEARREG_ANGLE(data_frame, time_period=14):
     real=LINEARREG_ANGLE(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LINEARREG_ANGLE(close, timeperiod=time_period)
 
 
-def LINEARREG_INTERCEPT(data_frame, time_period=14):
+def LINEARREG_INTERCEPT(df, time_period=14):
     """
     函数名：LINEARREG_INTERCEPT
     名称：线性回归截距
@@ -2439,11 +2439,11 @@ def LINEARREG_INTERCEPT(data_frame, time_period=14):
     real=LINEARREG_INTERCEPT(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LINEARREG_INTERCEPT(close, timeperiod=time_period)
 
 
-def LINEARREG_SLOPE(data_frame, time_period=14):
+def LINEARREG_SLOPE(df, time_period=14):
     """
     函数名：LINEARREG_SLOPE
     名称：线性回归斜率指标
@@ -2452,11 +2452,11 @@ def LINEARREG_SLOPE(data_frame, time_period=14):
     real=LINEARREG_SLOPE(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.LINEARREG_SLOPE(close, timeperiod=time_period)
 
 
-def STDDEV(data_frame, time_period=5, nb_dev=1):
+def STDDEV(df, time_period=5, nb_dev=1):
     """
     函数名：STDDEV
     名称：标准偏差
@@ -2466,11 +2466,11 @@ def STDDEV(data_frame, time_period=5, nb_dev=1):
     real=STDDEV(close, timeperiod=5, nbdev=1)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.STDDEV(close, timeperiod=time_period, nbdev=nb_dev)
 
 
-def TSF(data_frame, time_period=14):
+def TSF(df, time_period=14):
     """
     函数名：TSF
     名称：时间序列预测
@@ -2480,11 +2480,11 @@ def TSF(data_frame, time_period=14):
     real=TSF(close, timeperiod=14)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.TSF(close, timeperiod=time_period)
 
 
-def VAR(data_frame, time_period=5, nb_dev=1):
+def VAR(df, time_period=5, nb_dev=1):
     """
     函数名：  VAR
     名称：方差
@@ -2494,7 +2494,7 @@ def VAR(data_frame, time_period=5, nb_dev=1):
     real=VAR(close, timeperiod=5, nbdev=1)
     :return:
     """
-    close = data_frame['close']
+    close = df['close']
     return talib.VAR(close, timeperiod=time_period, nbdev=nb_dev)
 
 
@@ -2505,7 +2505,7 @@ def VAR(data_frame, time_period=5, nb_dev=1):
 #################
 
 
-def ATR(data_frame, time_period=14):
+def ATR(df, time_period=14):
     """
     函数名：ATR
     名称：真实波动幅度均值
@@ -2524,13 +2524,13 @@ def ATR(data_frame, time_period=14):
     real=ATR(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.ATR(high, low, close, timeperiod=time_period)
 
 
-def NATR(data_frame, time_period=14):
+def NATR(df, time_period=14):
     """
     函数名：NATR
     名称：归一化波动幅度均值
@@ -2541,13 +2541,13 @@ def NATR(data_frame, time_period=14):
     real=NATR(high, low, close, timeperiod=14)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.NATR(high, low, close, timeperiod=time_period)
 
 
-def TRANGE(data_frame):
+def TRANGE(df):
     """
     函数名：TRANGE
     名称：真正的范围
@@ -2556,9 +2556,9 @@ def TRANGE(data_frame):
     real=TRANGE(high, low, close)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
+    high = df['high']
+    low = df['low']
+    close = df['close']
     return talib.TRANGE(high, low, close)
 
 
@@ -2569,7 +2569,7 @@ def TRANGE(data_frame):
 #################
 
 
-def AD(data_frame):
+def AD(df):
     """
     函数名：AD
     名称：Chaikin A/D Line 累积/派发线（Accumulation/Distribution Line）
@@ -2590,14 +2590,14 @@ def AD(data_frame):
     real=AD(high, low, close, volume)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
-    volume = data_frame['volume']
+    high = df['high']
+    low = df['low']
+    close = df['close']
+    volume = df['volume']
     return talib.AD(high, low, close, volume)
 
 
-def ADOSC(data_frame, fast_period=3, slow_period=10):
+def ADOSC(df, fast_period=3, slow_period=10):
     """
     函数名：ADOSC
     名称：Chaikin A/D Oscillator Chaikin震荡指标
@@ -2614,14 +2614,14 @@ def ADOSC(data_frame, fast_period=3, slow_period=10):
     real=ADOSC(high, low, close, volume, fastperiod=3, slowperiod=10)
     :return:
     """
-    high = data_frame['high']
-    low = data_frame['low']
-    close = data_frame['close']
-    volume = data_frame['volume']
+    high = df['high']
+    low = df['low']
+    close = df['close']
+    volume = df['volume']
     return talib.ADOSC(high, low, close, volume, fastperiod=fast_period, slowperiod=slow_period)
 
 
-def OBV(data_frame):
+def OBV(df):
     """
     函数名：OBV
     名称：On Balance Volume 能量潮
@@ -2642,6 +2642,6 @@ def OBV(data_frame):
     real=OBV(close, volume)
     :return:
     """
-    close = data_frame['close']
-    volume = data_frame['volume']
+    close = df['close']
+    volume = df['volume']
     return talib.OBV(close, volume)
