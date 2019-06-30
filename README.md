@@ -6,4 +6,5 @@
 ## Upgrade
 `pip install --upgrade indicator`
 
-## Example
+## Documentation
+https://indicator.readthedocs.io/en/latest/base.html#not
