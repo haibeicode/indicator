@@ -19,6 +19,7 @@ Energy Indicator
 @author Tab
 """
 from indicator.base import *
+from indicator.technology.average import (EXPMEMA)
 
 
 def BRAR(df, N=26):
@@ -144,22 +145,6 @@ def WAD(df, M=30):
     })
 
 
-def PCNT(df, M=5):
-    """
-    幅度比
-    :param df:
-    :param M:
-    :return:
-    """
-    CLOSE = df['close']
-
-    PCNT = (CLOSE - REF(CLOSE, 1)) / CLOSE * 100
-    MAPCNT = EXPMEMA(PCNT, M)
-    return pd.DataFrame({
-        'WAD': WAD, 'MAPCNT': MAPCNT
-    })
-
-
 def CYR(df, N=5, M=5):
     """
     市场强弱
@@ -176,3 +161,21 @@ def CYR(df, N=5, M=5):
     return pd.DataFrame({
         'CRY': CRY, 'MACYR': MACYR
     })
+
+
+def PCNT(df, M=5):
+    """
+    幅度比
+    :param df:
+    :param M:
+    :return:
+    """
+    # 指数平滑移动平均平均方法不确定
+    pass
+    # CLOSE = df['close']
+    #
+    # PCNT = (CLOSE - REF(CLOSE, 1)) / CLOSE * 100
+    # MAPCNT = EXPMEMA(PCNT, M)
+    # return pd.DataFrame({
+    #     'WAD': WAD, 'MAPCNT': MAPCNT
+    # })

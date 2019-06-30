@@ -19,6 +19,7 @@ Trend Indicators
 @author Tab
 """
 from indicator.base import *
+from indicator.technology.average import (DMA)
 
 
 def CHO(df, N1=10, N2=20, M=6):
@@ -39,6 +40,23 @@ def CHO(df, N1=10, N2=20, M=6):
     MACHO = MA(CHO, M)
     return pd.DataFrame({
         'CHO': CHO, 'MACHO': MACHO
+    })
+
+
+def DMA(df, M1=10, M2=50, M3=10):
+    """
+    平均线差
+    :param df:
+    :param M1:
+    :param M2:
+    :param M3:
+    :return:
+    """
+    CLOSE = df['close']
+    DDD = MA(CLOSE, M1) - MA(CLOSE, M2)
+    AMA = MA(DDD, M3)
+    return pd.DataFrame({
+        'DDD': DDD, 'AMA': AMA
     })
 
 

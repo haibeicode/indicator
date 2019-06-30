@@ -20,6 +20,7 @@ Route
 @author Tab
 """
 from indicator.base import *
+from indicator.technology.average import (DMA)
 
 
 def BOLL(df, N=20, P=2):

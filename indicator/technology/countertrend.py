@@ -241,30 +241,6 @@ def LWR(df, N=9, M1=3, M2=3):
     return pd.DataFrame(DICT)
 
 
-def MARSI(df, M1=10, M2=6):
-    """
-    相对强弱平均线
-    :param df:
-    :param M1:
-    :param M2:
-    :return:
-    """
-    CLOSE = df['close']
-    DIF = CLOSE - REF(CLOSE, 1)
-    VU = IF(DIF >= 0, DIF, 0)
-    VD = IF(DIF < 0, -DIF, 0)
-    MAU1 = MEMA(VU, M1)
-    MAD1 = MEMA(VD, M1)
-    MAU2 = MEMA(VU, M2)
-    MAD2 = MEMA(VD, M2)
-
-    RSI10 = MA(100 * MAU1 / (MAU1 + MAD1), M1)
-    RSI6 = MA(100 * MAU2 / (MAU2 + MAD2), M2)
-    DICT = {'RSI10': RSI10, 'RSI6': RSI6}
-
-    return pd.DataFrame(DICT)
-
-
 def BIASQL(df, N=6, M=6):
     """
     乖离率-传统版
@@ -422,5 +398,31 @@ def FSL(df):
     # SWL = (EMA(CLOSE, 5) * 7 + EMA(CLOSE, 10) * 3) / 10
     # SWS = DMA(EMA(CLOSE, 12), MAX(1, 100 * (SUM(VOL, 5) / (3 * CAPITAL))))
     # DICT = {'SWL': SWL, 'MAADTM': SWS}
+    #
+    # return pd.DataFrame(DICT)
+
+
+def MARSI(df, M1=10, M2=6):
+    """
+    相对强弱平均线
+    :param df:
+    :param M1:
+    :param M2:
+    :return:
+    """
+    # 改良平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    # DIF = CLOSE - REF(CLOSE, 1)
+    # VU = IF(DIF >= 0, DIF, 0)
+    # VD = IF(DIF < 0, -DIF, 0)
+    # MAU1 = MEMA(VU, M1)
+    # MAD1 = MEMA(VD, M1)
+    # MAU2 = MEMA(VU, M2)
+    # MAD2 = MEMA(VD, M2)
+    #
+    # RSI10 = MA(100 * MAU1 / (MAU1 + MAD1), M1)
+    # RSI6 = MA(100 * MAU2 / (MAU2 + MAD2), M2)
+    # DICT = {'RSI10': RSI10, 'RSI6': RSI6}
     #
     # return pd.DataFrame(DICT)

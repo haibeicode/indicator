@@ -22,26 +22,6 @@ Moving Average
 from indicator.base import *
 
 
-def ACD(df, M=20):
-    """
-    升降线
-    :param df:
-    :param M:
-    :return:
-    """
-    CLOSE = df['close']
-    LOW = df['low']
-    HIGH = df['high']
-    LC = REF(CLOSE, 1)
-    DIF = CLOSE - IF(CLOSE > LC, MIN(LOW, LC), MAX(HIGH, LC))
-
-    ACD = SUM(IF(CLOSE == LC, 0, DIF), 0)
-    MAACD = EXPMEMA(ACD, M)
-    return pd.DataFrame({
-        'ACD': ACD, 'MAACD': MAACD
-    })
-
-
 def BBI(df, M1=3, M2=6, M3=12, M4=24):
     """
     多空均线
@@ -71,29 +51,13 @@ def EXPMA(df, P1=5, P2=10, P3=20, P4=60):
     :return:
     """
     CLOSE = df['close']
+
     MA1 = EMA(CLOSE, P1)
     MA2 = EMA(CLOSE, P2)
     MA3 = EMA(CLOSE, P3)
     MA4 = EMA(CLOSE, P4)
     return pd.DataFrame({
         'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
-    })
-
-
-def EXPMAS(df, M1=12, M2=50):
-    """
-    指数平均线-副图
-    :param df:
-    :param M1:
-    :param M2:
-    :return:
-    """
-    CLOSE = df['close']
-
-    EXP1 = EMA(CLOSE, M1)
-    EXP2 = EMA(CLOSE, M2)
-    return pd.DataFrame({
-        'EXP1': EXP1, 'EXP2': EXP2
     })
 
 
@@ -109,6 +73,7 @@ def HMA(df, M1=6, M2=12, M3=30, M4=72, M5=144):
     :return:
     """
     HIGH = df['high']
+
     HMA1 = MA(HIGH, M1)
     HMA2 = MA(HIGH, M2)
     HMA3 = MA(HIGH, M3)
@@ -131,6 +96,7 @@ def LMA(df, M1=6, M2=12, M3=30, M4=72, M5=144):
     :return:
     """
     LOW = df['low']
+
     LMA1 = MA(LOW, M1)
     LMA2 = MA(LOW, M2)
     LMA3 = MA(LOW, M3)
@@ -156,6 +122,7 @@ def VMA(df, M1=6, M2=12, M3=30, M4=72, M5=144):
     OPEN = df['open']
     LOW = df['low']
     CLOSE = df['close']
+
     VV = (HIGH + OPEN + LOW + CLOSE) / 4
 
     VMA1 = MA(VV, M1)
@@ -168,7 +135,7 @@ def VMA(df, M1=6, M2=12, M3=30, M4=72, M5=144):
     })
 
 
-def VMA(df, M1=5, M2=13, M3=34, M4=60):
+def AMV(df, M1=5, M2=13, M3=34, M4=60):
     """
     成本价均线
     :param df:
@@ -181,6 +148,7 @@ def VMA(df, M1=5, M2=13, M3=34, M4=60):
     OPEN = df['open']
     VOL = df['volume']
     CLOSE = df['close']
+
     AMOV = VOL * (OPEN + CLOSE) / 2
 
     AMV1 = SUM(AMOV, M1) / SUM(VOL, M1)
@@ -211,12 +179,13 @@ def BBIBOLL(df, N=11, M=6):
     })
 
 
-def ALLIGAT(df, N=11, M=6):
+def ALLIGAT(df, M1=13, M2=8, M3=5):
     """
-    多空布林线
+    鳄鱼线
     :param df:
-    :param N:
-    :param M:
+    :param M1:
+    :param M2:
+    :param M3:
     :return:
     """
     HIGH = df['high']
@@ -224,10 +193,69 @@ def ALLIGAT(df, N=11, M=6):
 
     NN = (HIGH + LOW) / 2
 
-    SC = REF(MA(NN, 5), 3)
-    YC = REF(MA(NN, 8), 5)
-    XE = REF(MA(NN, 13), 8)
+    SC = REF(MA(NN, M3), 3)
+    YC = REF(MA(NN, M2), 5)
+    XE = REF(MA(NN, M1), 8)
 
     return pd.DataFrame({
         'SC': SC, 'YC': YC, 'XE': XE
     })
+
+
+def EXPMEMA(df, P1=5, P2=10, P3=20, P4=60):
+    """
+    指数平滑移动平均
+    :param df:
+    :param P1:
+    :param P2:
+    :param P3:
+    :param P4:
+    :return:
+    """
+    # 改良平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    # MA1 = MEMA(CLOSE, P1)
+    # MA2 = MEMA(CLOSE, P2)
+    # MA3 = MEMA(CLOSE, P3)
+    # MA4 = MEMA(CLOSE, P4)
+    # return pd.DataFrame({
+    #     'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
+    # })
+
+    # def HSL(df, N=5):
+    #     """
+    #     换手线
+    #     :param df:
+    #     :param N:
+    #     :return:
+    #     """
+    #
+    #     VOL = df['volume']
+    #     HSL = IF((SETCODE == 0 or SETCODE == 1), 100 * VOL, VOL) / (FINANCE(7) / 100)
+    #     MAHSL = MA(HSL, N)
+    #     return pd.DataFrame({
+    #         'HSL': HSL, 'MAHSL': MAHSL
+    #     })
+
+
+def ACD(df, M=20):
+    """
+    升降线
+    :param df:
+    :param M:
+    :return:
+    """
+    # 指数平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    # LOW = df['low']
+    # HIGH = df['high']
+    # LC = REF(CLOSE, 1)
+    # DIF = CLOSE - IF(CLOSE > LC, MIN(LOW, LC), MAX(HIGH, LC))
+    #
+    # ACD = SUM(IF(CLOSE == LC, 0, DIF), 0)
+    # MAACD = EXPMEMA(ACD, M)
+    # return pd.DataFrame({
+    #     'ACD': ACD, 'MAACD': MAACD
+    # })

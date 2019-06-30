@@ -23,41 +23,27 @@ import numpy as np
 import pandas as pd
 
 
-# 算术函数
-
-def NOT(b):
-    """
-    取反
-    :param b:
-    :return:
-    """
-    if b == 0:
-        return 1
-    else:
-        return 0
-
-
-def IF(cond, a, b):
+def IF(logic, a, b):
     """
     逻辑取值
-    :param cond:
+    :param logic:
     :param a:
     :param b:
     :return:
     """
-    return pd.Series(np.where(cond, a, b), index=a.index)
+    return pd.Series(np.where(logic, a, b), index=a.index)
 
 
-def IFAND(cond1, cond2, v1, v2):
+def IFAND(logic1, logic2, a, b):
     """
     逻辑和
-    :param cond1:
-    :param cond2:
-    :param v1:
-    :param v2:
+    :param logic1:
+    :param logic2:
+    :param a:
+    :param b:
     :return:
     """
-    return pd.Series(np.where(np.logical_and(cond1, cond2), v1, v2), index=v1.index)
+    return pd.Series(np.where(np.logical_and(logic1, logic2), a, b), index=a.index)
 
 
 def MAX(a, b):
@@ -80,7 +66,54 @@ def MIN(a, b):
     return IF(a < b, a, b)
 
 
-# 逻辑函数
+def SUM(series, n=2):
+    """
+    求总和
+    :param series:
+    :param n:
+    :return:
+    """
+    return pd.Series.rolling(series, n).sum()
+
+
+def COUNT(logic, n=2):
+    """
+    统计满足条件的周期数
+    :param logic:
+    :param n:
+    :return:
+    """
+    return pd.Series(np.where(logic, 1, 0), index=logic.index).rolling(n).sum()
+
+
+def STD(series, n=2):
+    """
+    估算标准差
+    :param series:
+    :param n:
+    :return:
+    """
+    return pd.Series.rolling(series, n).std()
+
+
+def ABS(series):
+    """
+    求绝对值
+    :param series:
+    :return:
+    """
+    return abs(series)
+
+
+def AVEDEV(series, n=2):
+    """
+    平均绝对偏差
+    :param series:
+    :param n:
+    :return:
+    """
+    return series.rolling(n).apply(lambda x: (np.abs(x - x.mean())).mean(), raw=True)
+
 
 def CROSS(a, b):
     """
@@ -92,7 +125,17 @@ def CROSS(a, b):
     return (pd.Series(np.where(a < b, 1, 0), index=a.index).diff() < 0).apply(int)
 
 
-def SMA(series, n, m=1):
+def MA(series, n=2):
+    """
+    简单移动平均
+    :param series:
+    :param n:
+    :return:
+    """
+    return pd.Series.rolling(series, n).mean()
+
+
+def SMA(series, n=2, m=1):
     """
     移动平均
     :param series:
@@ -103,13 +146,12 @@ def SMA(series, n, m=1):
     ret = []
     i = 1
     length = len(series)
-    # 跳过X中前面几个 nan 值
     while i < length:
         if np.isnan(series.iloc[i]):
             i += 1
         else:
             break
-    preY = series.iloc[i]  # Y'
+    preY = series.iloc[i]
     ret.append(preY)
     while i < length:
         Y = (m * series.iloc[i] + (n - m) * preY) / float(n)
@@ -119,17 +161,7 @@ def SMA(series, n, m=1):
     return pd.Series(ret, index=series.tail(len(ret)).index)
 
 
-def MA(series, n):
-    """
-    简单移动平均
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.Series.rolling(series, n).mean()
-
-
-def EMA(series, n):
+def EMA(series, n=2):
     """
     指数移动平均
     :param series:
@@ -139,37 +171,7 @@ def EMA(series, n):
     return pd.Series.ewm(series, span=n, min_periods=n - 1, adjust=True).mean()
 
 
-def MEMA(series, n):
-    """
-    平滑移动平均
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.rolling_mean(series, span=n)
-
-
-def EXPMEMA(df, P1=5, P2=10, P3=20, P4=60):
-    """
-    指数平滑移动平均
-    :param df:
-    :param P1:
-    :param P2:
-    :param P3:
-    :param P4:
-    :return:
-    """
-    CLOSE = df['close']
-    MA1 = MEMA(CLOSE, P1)
-    MA2 = MEMA(CLOSE, P2)
-    MA3 = MEMA(CLOSE, P3)
-    MA4 = MEMA(CLOSE, P4)
-    return pd.DataFrame({
-        'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
-    })
-
-
-def HHV(series, n):
+def HHV(series, n=2):
     """
     求最高值
     :param series:
@@ -179,7 +181,7 @@ def HHV(series, n):
     return pd.Series(series).rolling(n).max()
 
 
-def LLV(series, n):
+def LLV(series, n=2):
     """
     求最低值
     :param series:
@@ -189,27 +191,7 @@ def LLV(series, n):
     return pd.Series(series).rolling(n).min()
 
 
-def SUM(series, n):
-    """
-    求总和
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.Series.rolling(series, n).sum()
-
-
-# 数学函数
-def ABS(series):
-    """
-    求绝对值
-    :param series:
-    :return:
-    """
-    return abs(series)
-
-
-def REF(series, n):
+def REF(series, n=2):
     """
     引用若干周期前的数据
     :param series:
@@ -218,65 +200,11 @@ def REF(series, n):
     """
     return series - series.diff(n)
 
-
-def COUNT(cond, n):
-    """
-    统计满足条件的周期数
-    :param cond:
-    :param n:
-    :return:
-    """
-    return pd.Series(np.where(cond, 1, 0), index=cond.index).rolling(n).sum()
-
-
-def STD(series, n):
-    """
-    估算标准差
-    :param series:
-    :param n:
-    :return:
-    """
-    return pd.Series.rolling(series, n).std()
-
-
-# 统计函数
-def AVEDEV(series, n):
-    """
-    平均绝对偏差
-    :param series:
-    :param n:
-    :return:
-    """
-    return series.rolling(n).apply(lambda x: (np.abs(x - x.mean())).mean(), raw=True)
-
-
-def DMA(df, M1=10, M2=50, M3=10):
-    """
-    平均线差 DMA
-    :param df:
-    :param M1:
-    :param M2:
-    :param M3:
-    :return:
-    """
-    CLOSE = df['close']
-    DDD = MA(CLOSE, M1) - MA(CLOSE, M2)
-    AMA = MA(DDD, M3)
-    return pd.DataFrame({
-        'DDD': DDD, 'AMA': AMA
-    })
-
-# def HSL(df, N=5):
+# def MEMA(series, n):
 #     """
-#     换手线
-#     :param df:
-#     :param N:
+#     改良平滑移动平均
+#     :param series:
+#     :param n:
 #     :return:
 #     """
-#
-#     VOL = df['volume']
-#     HSL = IF((SETCODE == 0 or SETCODE == 1), 100 * VOL, VOL) / (FINANCE(7) / 100)
-#     MAHSL = MA(HSL, N)
-#     return pd.DataFrame({
-#         'HSL': HSL, 'MAHSL': MAHSL
-#     })
+#     return pd.Series.ewma(series, span=n)
