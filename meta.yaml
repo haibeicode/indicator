@@ -1,0 +1,13 @@
+package:
+  name: indicator
+  version: 1.0.4
+
+build:
+  number: 3
+
+requirements:
+  run:
+    - python
+about:
+  summary: Financial Indicator Tool
+

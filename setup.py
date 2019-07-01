@@ -11,7 +11,7 @@ Upgrade : pip install --upgrade indicator
 
 setup(
     name='indicator',
-    version='1.0.3',
+    version='1.0.4',
     keywords='Financial Indicator Tool',
     description='Solving Quantitative Indicators of Funds, Stocks and Foreign Exchange Tool',
     long_description=long_description,

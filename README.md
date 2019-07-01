@@ -1,7 +1,12 @@
 # Financial Indicator Tool
 
 ## Install
+
+### PIP
 `pip install indicator`
+
+### CONDA
+`conda install -c haibei indicator`
 
 ## Upgrade
 `pip install --upgrade indicator`
