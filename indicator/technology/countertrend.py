@@ -15,13 +15,13 @@
 # limitations under the License.
 
 """
-Counter Trend Indicator
 Overbought and Oversold
 超买超卖型
 @author Tab
 """
 
 from indicator.base import *
+from indicator.technology.average import (EXPMEMA)
 
 
 def CCI(df, N=14):
@@ -31,13 +31,15 @@ def CCI(df, N=14):
     :param N:
     :return:
     """
-    typ = (df['high'] + df['low'] + df['close']) / 3
-    cci = ((typ - MA(typ, N)) / (0.015 * AVEDEV(typ, N)))
-    a = 100
-    b = -100
+    CLOSE = df['close']
+    HIGH = df['high']
+    LOW = df['low']
 
+    TYP = (HIGH + LOW + CLOSE) / 3
+
+    CCI = (TYP - MA(TYP, N)) / (0.015 * AVEDEV(TYP, N))
     return pd.DataFrame({
-        'CCI': cci, 'a': a, 'b': b
+        'CCI': CCI
     })
 
 
@@ -55,11 +57,13 @@ def KDJ(df, N=9, M1=3, M2=3):
     L = df['low']
 
     RSV = (C - LLV(L, N)) / (HHV(H, N) - LLV(L, N)) * 100
-    K = SMA(RSV, M1)
-    D = SMA(K, M2)
-    J = 3 * K - 2 * D
-    DICT = {'KDJ_K': K, 'KDJ_D': D, 'KDJ_J': J}
-    return pd.DataFrame(DICT)
+
+    KDJ_K = SMA(RSV, M1)
+    KDJ_D = SMA(KDJ_K, M2)
+    KDJ_J = 3 * KDJ_K - 2 * KDJ_D
+    return pd.DataFrame({
+        'KDJ_K': KDJ_K, 'KDJ_D': KDJ_D, 'KDJ_J': KDJ_J
+    })
 
 
 def MFT(df, N=9):
@@ -76,8 +80,11 @@ def MFT(df, N=9):
 
     TYP = (HIGH + LOW + CLOSE) / 3
     V1 = SUM(IF(TYP > REF(TYP, 1), TYP * VOL, 0), N) / SUM(IF(TYP < REF(TYP, 1), TYP * VOL, 0), N)
+
     MFI = 100 - (100 / (1 + V1))
-    return pd.DataFrame(MFI)
+    return pd.DataFrame({
+        'MFI': MFI
+    })
 
 
 def MTM(df, N=12, M=6):
@@ -88,62 +95,13 @@ def MTM(df, N=12, M=6):
     :param M:
     :return:
     """
-    C = df['close']
-    mtm = C - REF(C, N)
-    MTMMA = MA(mtm, M)
-    DICT = {'MTM': mtm, 'MTMMA': MTMMA}
-    return pd.DataFrame(DICT)
-
-
-def OSC(df, N=20, M=6):
-    """
-    变动速率线
-    :param df:
-    :param N:
-    :param M:
-    :return:
-    """
-    C = df['close']
-    OS = (C - MA(C, N)) * 100
-    MAOSC = EMA(OS, M)
-    DICT = {'OSC': OS, 'MAOSC': MAOSC}
-
-    return pd.DataFrame(DICT)
-
-
-def ROC(df, N=12, M=6):
-    """
-    变动率指标
-    :param df:
-    :param N:
-    :param M:
-    :return:
-    """
-    C = df['close']
-    roc = 100 * (C - REF(C, N)) / REF(C, N)
-    ROCMA = MA(roc, M)
-    DICT = {'ROC': roc, 'ROCMA': ROCMA}
-
-    return pd.DataFrame(DICT)
-
-
-def RSI(df, N1=12, N2=26, N3=9):
-    """
-    相对强弱指标
-    :param df:
-    :param N1:
-    :param N2:
-    :param N3:
-    :return:
-    """
     CLOSE = df['close']
-    LC = REF(CLOSE, 1)
-    RSI1 = SMA(MAX(CLOSE - LC, 0), N1) / SMA(ABS(CLOSE - LC), N1) * 100
-    RSI2 = SMA(MAX(CLOSE - LC, 0), N2) / SMA(ABS(CLOSE - LC), N2) * 100
-    RSI3 = SMA(MAX(CLOSE - LC, 0), N3) / SMA(ABS(CLOSE - LC), N3) * 100
-    DICT = {'RSI1': RSI1, 'RSI2': RSI2, 'RSI3': RSI3}
 
-    return pd.DataFrame(DICT)
+    MTM = CLOSE - REF(CLOSE, N)
+    MTMMA = MA(MTM, M)
+    return pd.DataFrame({
+        'MTM': MTM, 'MTMMA': MTMMA
+    })
 
 
 def KD(df, N=9, M1=3, M2=3):
@@ -158,11 +116,14 @@ def KD(df, N=9, M1=3, M2=3):
     CLOSE = df['close']
     LOW = df['low']
     HIGH = df['high']
+
     RSV = (CLOSE - LLV(LOW, N)) / (HHV(HIGH, N) - LLV(LOW, N)) * 100
+
     K = SMA(RSV, M1, 1)
     D = SMA(K, M2, 1)
-    DICT = {'K': K, 'D': D}
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'K': K, 'D': D
+    })
 
 
 def SKDJ(df, N=9, M=3):
@@ -176,12 +137,13 @@ def SKDJ(df, N=9, M=3):
     CLOSE = df['close']
     LOWV = LLV(df['low'], N)
     HIGHV = HHV(df['high'], N)
-    RSV = EMA((CLOSE - LOWV) / (HIGHV - LOWV) * 100, M)
-    K = EMA(RSV, M)
-    D = MA(K, M)
-    DICT = {'RSV': RSV, 'SKDJ_K': K, 'SKDJ_D': D}
 
-    return pd.DataFrame(DICT)
+    RSV = EMA((CLOSE - LOWV) / (HIGHV - LOWV) * 100, M)
+    SKDJ_K = EMA(RSV, M)
+    SKDJ_D = MA(SKDJ_K, M)
+    return pd.DataFrame({
+        'RSV': RSV, 'SKDJ_K': SKDJ_K, 'SKDJ_D': SKDJ_D
+    })
 
 
 def UDL(df, N1=3, N2=5, N3=10, N4=20, M=6):
@@ -196,11 +158,12 @@ def UDL(df, N1=3, N2=5, N3=10, N4=20, M=6):
     :return:
     """
     CLOSE = df['close']
+
     UDL = (MA(CLOSE, N1) + MA(CLOSE, N2) + MA(CLOSE, N3) + MA(CLOSE, N4)) / 4
     MAUDL = MA(UDL, M)
-    DICT = {'UDL': UDL, 'MAUDL': MAUDL}
-
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'UDL': UDL, 'MAUDL': MAUDL
+    })
 
 
 def WR(df, N=10, N1=6):
@@ -214,11 +177,12 @@ def WR(df, N=10, N1=6):
     HIGH = df['high']
     LOW = df['low']
     CLOSE = df['close']
+
     WR1 = 100 * (HHV(HIGH, N) - CLOSE) / (HHV(HIGH, N) - LLV(LOW, N))
     WR2 = 100 * (HHV(HIGH, N1) - CLOSE) / (HHV(HIGH, N1) - LLV(LOW, N1))
-    DICT = {'WR1': WR1, 'WR2': WR2}
-
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'WR1': WR1, 'WR2': WR2
+    })
 
 
 def LWR(df, N=9, M1=3, M2=3):
@@ -234,11 +198,12 @@ def LWR(df, N=9, M1=3, M2=3):
     LOW = df['low']
     CLOSE = df['close']
     RSV = (HHV(HIGH, N) - CLOSE) / (HHV(HIGH, N) - LLV(LOW, N)) * 100
+
     LWR1 = SMA(RSV, M1, 1)
     LWR2 = SMA(LWR1, M2, 1)
-    DICT = {'LWR1': LWR1, 'LWR2': LWR2}
-
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'LWR1': LWR1, 'LWR2': LWR2
+    })
 
 
 def BIASQL(df, N=6, M=6):
@@ -251,10 +216,13 @@ def BIASQL(df, N=6, M=6):
     :return:
     """
     CLOSE = df['close']
+
     BIAS = (CLOSE - MA(CLOSE, N)) / MA(CLOSE, N) * 100
     BIASMA = MA(BIAS, M)
-    DICT = {'BIAS': BIAS, 'BIASMA': BIASMA}
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'BIAS': BIAS,
+        'BIASMA': BIASMA
+    })
 
 
 def BIAS(df, N1=6, N2=12, N3=24):
@@ -267,12 +235,34 @@ def BIAS(df, N1=6, N2=12, N3=24):
     :return:
     """
     CLOSE = df['close']
+
     BIAS1 = (CLOSE - MA(CLOSE, N1)) / MA(CLOSE, N1) * 100
     BIAS2 = (CLOSE - MA(CLOSE, N2)) / MA(CLOSE, N2) * 100
     BIAS3 = (CLOSE - MA(CLOSE, N3)) / MA(CLOSE, N3) * 100
-    DICT = {'BIAS1': BIAS1, 'BIAS2': BIAS2, 'BIAS3': BIAS3}
+    return pd.DataFrame({
+        'BIAS1': BIAS1,
+        'BIAS2': BIAS2,
+        'BIAS3': BIAS3
+    })
 
-    return pd.DataFrame(DICT)
+
+def BIAS36(df, M=6):
+    """
+    三六乖离
+    :param df:
+    :param M:
+    :return:
+    """
+    CLOSE = df['close']
+
+    BIAS36 = MA(CLOSE, 3) - MA(CLOSE, 6)
+    BIAS612 = MA(CLOSE, 6) - MA(CLOSE, 12)
+    MABIAS = MA(BIAS36, M)
+    return pd.DataFrame({
+        'BIAS36': BIAS36,
+        'BIAS612': BIAS612,
+        'MABIAS': MABIAS
+    })
 
 
 def ADTM(df, N=23, M=8):
@@ -286,16 +276,17 @@ def ADTM(df, N=23, M=8):
     HIGH = df['high']
     LOW = df['low']
     OPEN = df['open']
+
     DTM = IF(OPEN > REF(OPEN, 1), MAX((HIGH - OPEN), (OPEN - REF(OPEN, 1))), 0)
     DBM = IF(OPEN < REF(OPEN, 1), MAX((OPEN - LOW), (OPEN - REF(OPEN, 1))), 0)
     STM = SUM(DTM, N)
     SBM = SUM(DBM, N)
-    ADTM1 = IF(STM > SBM, (STM - SBM) / STM,
-               IF(STM != SBM, (STM - SBM) / SBM, 0))
-    MAADTM = MA(ADTM1, M)
-    DICT = {'ADTM': ADTM1, 'MAADTM': MAADTM}
 
-    return pd.DataFrame(DICT)
+    ADTM1 = IF(STM > SBM, (STM - SBM) / STM, IF(STM != SBM, (STM - SBM) / SBM, 0))
+    MAADTM = MA(ADTM1, M)
+    return pd.DataFrame({
+        'ADTM': ADTM1, 'MAADTM': MAADTM
+    })
 
 
 def ATR(df, N=14):
@@ -308,16 +299,17 @@ def ATR(df, N=14):
     CLOSE = df['close']
     HIGH = df['high']
     LOW = df['low']
+
     MTR = MAX(MAX((HIGH - LOW), ABS(REF(CLOSE, 1) - HIGH)), ABS(REF(CLOSE, 1) - LOW))
     ATR = MA(MTR, N)
-    DICT = {'MTR': MTR, 'ATR': ATR}
+    return pd.DataFrame({
+        'MTR': MTR, 'ATR': ATR
+    })
 
-    return pd.DataFrame(DICT)
 
-
-def ATR(df, M=10):
+def DKX(df, M=10):
     """
-    真实波幅
+    多空线
     :param df:
     :param M:
     :return:
@@ -326,7 +318,9 @@ def ATR(df, M=10):
     LOW = df['low']
     OPEN = df['open']
     HIGH = df['high']
+
     MID = (3 * CLOSE + LOW + OPEN + HIGH) / 6
+
     DKX = (20 * MID + 19 * REF(MID, 1) + 18 * REF(MID, 2) + 17 * REF(MID, 3) +
            16 * REF(MID, 4) + 15 * REF(MID, 5) + 14 * REF(MID, 6) +
            13 * REF(MID, 7) + 12 * REF(MID, 8) + 11 * REF(MID, 9) +
@@ -334,8 +328,9 @@ def ATR(df, M=10):
            7 * REF(MID, 13) + 6 * REF(MID, 14) + 5 * REF(MID, 15) +
            4 * REF(MID, 16) + 3 * REF(MID, 17) + 2 * REF(MID, 18) + REF(MID, 20)) / 210
     MADKX = MA(DKX, M)
-    DICT = {'DKX': DKX, 'MADKX': MADKX}
-    return pd.DataFrame(DICT)
+    return pd.DataFrame({
+        'DKX': DKX, 'MADKX': MADKX
+    })
 
 
 def TAPI(df, dp, M=6):
@@ -347,11 +342,69 @@ def TAPI(df, dp, M=6):
     """
     AMOUNT = df['amount']
     INDEXC = dp['close']
+
     TAPI = AMOUNT / INDEXC
     MATAIP = MA(TAPI, M)
-    DICT = {'TAPI': TAPI, 'MATAIP': MATAIP}
+    return pd.DataFrame({
+        'TAPI': TAPI, 'MATAIP': MATAIP
+    })
 
-    return pd.DataFrame(DICT)
+
+def RSI(df, N=6, M=12):
+    """
+    相对强弱指标
+    :param df:
+    :param N:
+    :param M:
+    :return:
+    """
+    # 指数平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    #
+    # OSC = 100 * (CLOSE - MA(CLOSE, N))
+    # MAOSC = EXPMEMA(OSC, M)
+    # return pd.DataFrame({
+    #     'OSC': OSC, 'MAOSC': MAOSC
+    # })
+
+
+def OSC(df, N=20, M=6):
+    """
+    变动速率线
+    :param df:
+    :param N:
+    :param M:
+    :return:
+    """
+    # 指数平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    #
+    # OSC = 100 * (CLOSE - MA(CLOSE, N))
+    # MAOSC = EXPMEMA(OSC, M)
+    # return pd.DataFrame({
+    #     'OSC': OSC, 'MAOSC': MAOSC
+    # })
+
+
+def ROC(df, N=12, M=6):
+    """
+    变动率指标
+    :param df:
+    :param N:
+    :param M:
+    :return:
+    """
+    # 指数平滑移动平均方法不确定
+    pass
+    # CLOSE = df['close']
+    # OSC = 100 * (CLOSE - MA(CLOSE, N))
+    # MAOSC = EXPMEMA(OSC, M)
+    #
+    # return pd.DataFrame({
+    #     'ROC': OSC, 'MAOSC': MAOSC
+    # })
 
 
 def CYD(df, N=21):

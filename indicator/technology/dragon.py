@@ -96,11 +96,11 @@ def SHT(df, N=5):
     VAR1 = MA((VOL - REF(VOL, 1)) / REF(VOL, 1), 5)
     VAR2 = (CLOSE - MA(CLOSE, 24)) / MA(CLOSE, 24) * 100
 
-    MY = VAR2 * (1 + VAR1)
+    SHT = VAR2 * (1 + VAR1)
     SHTMA = MA(SHT, N)
 
     return pd.DataFrame({
-        'MY': MY, 'SHTMA': SHTMA
+        'SHT': SHT, 'SHTMA': SHTMA
     })
 
 
