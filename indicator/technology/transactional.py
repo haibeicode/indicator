@@ -36,7 +36,6 @@ def MAJY(df, SHORT=5, LONG=20):
 
     DUO = CROSS(MA1, MA2)
     KONG = CROSS(MA2, MA1)
-
     return pd.DataFrame({
         'DUO': DUO, 'KONG': KONG
     })
@@ -57,7 +56,6 @@ def MACDJY(df, SHORT=12, LONG=26, MID=9):
 
     DUO = CROSS(MACD, 0)
     KONG = CROSS(0, MACD)
-
     return pd.DataFrame({
         'DUO': DUO, 'KONG': KONG
     })
@@ -81,19 +79,17 @@ def KDJJY(df, N=9, M1=3):
 
     DUO = CROSS(J, 0)
     KONG = CROSS(100, J)
-
     return pd.DataFrame({
         'DUO': DUO, 'KONG': KONG
     })
 
 
-def TQAJY(df, X1=20, X2=10, NMIN=10):
+def TQAJY(df, X1=20, X2=10):
     """
     唐奇安
     :param df:
     :param X1:
     :param X2:
-    :param NMIN:
     :return:
     """
     HIGH = df['high']
@@ -103,7 +99,6 @@ def TQAJY(df, X1=20, X2=10, NMIN=10):
 
     DUO = HIGH >= ZQGD
     KONG = LOW <= ZQDD
-
     return pd.DataFrame({
         'DUO': DUO, 'KONG': KONG
     })

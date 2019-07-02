@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Pressure support Indicators
+Pressure Indicators
 @author Tab
 """
 from indicator.base import *
@@ -42,8 +42,7 @@ def MIKE(df, N=12):
     MS = TYP - (HH - LL)
     SS = 2 * LL - HH
     return pd.DataFrame({
-        'WR': WR, 'MR': MR, 'SR': SR,
-        'WS': WS, 'MS': MS, 'SS': SS
+        'WR': WR, 'MR': MR, 'SR': SR, 'WS': WS, 'MS': MS, 'SS': SS
     })
 
 
@@ -59,12 +58,12 @@ def MFI(df, N=14):
     L = df['low']
     VOL = df['volume']
     TYP = (C + H + L) / 3
-    V1 = SUM(IF(TYP > REF(TYP, 1), TYP * VOL, 0), N) / \
-         SUM(IF(TYP < REF(TYP, 1), TYP * VOL, 0), N)
-    mfi = 100 - (100 / (1 + V1))
-    DICT = {'MFI': mfi}
+    V1 = SUM(IF(TYP > REF(TYP, 1), TYP * VOL, 0), N) / SUM(IF(TYP < REF(TYP, 1), TYP * VOL, 0), N)
 
-    return pd.DataFrame(DICT)
+    MFI = 100 - (100 / (1 + V1))
+    return pd.DataFrame({
+        'MFI': MFI
+    })
 
 
 def ATR(df, N=14):
@@ -77,9 +76,10 @@ def ATR(df, N=14):
     C = df['close']
     H = df['high']
     L = df['low']
+
     TR = MAX(MAX((H - L), ABS(REF(C, 1) - H)), ABS(REF(C, 1) - L))
-    atr = MA(TR, N)
-    return pd.DataFrame({'TR': TR, 'ATR': atr})
+    ATR = MA(TR, N)
+    return pd.DataFrame({'TR': TR, 'ATR': ATR})
 
 
 def DDI(df, N=13, N1=26, M=1, M1=5):
@@ -95,18 +95,16 @@ def DDI(df, N=13, N1=26, M=1, M1=5):
 
     H = df['high']
     L = df['low']
-    DMZ = IF((H + L) > (REF(H, 1) + REF(L, 1)),
-             MAX(ABS(H - REF(H, 1)), ABS(L - REF(L, 1))), 0)
-    DMF = IF((H + L) < (REF(H, 1) + REF(L, 1)),
-             MAX(ABS(H - REF(H, 1)), ABS(L - REF(L, 1))), 0)
+
+    DMZ = IF((H + L) > (REF(H, 1) + REF(L, 1)), MAX(ABS(H - REF(H, 1)), ABS(L - REF(L, 1))), 0)
+    DMF = IF((H + L) < (REF(H, 1) + REF(L, 1)), MAX(ABS(H - REF(H, 1)), ABS(L - REF(L, 1))), 0)
     DIZ = SUM(DMZ, N) / (SUM(DMZ, N) + SUM(DMF, N))
     DIF = SUM(DMF, N) / (SUM(DMF, N) + SUM(DMZ, N))
-    ddi = DIZ - DIF
-    ADDI = SMA(ddi, N1, M)
-    AD = MA(ADDI, M1)
-    DICT = {'DDI': ddi, 'ADDI': ADDI, 'AD': AD}
 
-    return pd.DataFrame(DICT)
+    DDI = DIZ - DIF
+    ADDI = SMA(DDI, N1, M)
+    AD = MA(ADDI, M1)
+    return pd.DataFrame({'DDI': DDI, 'ADDI': ADDI, 'AD': AD})
 
 
 def shadow(df):
@@ -115,61 +113,9 @@ def shadow(df):
     :param df:
     :return:
     """
-    return {
+    return pd.DataFrame({
         'LOW': lower_shadow(df), 'UP': upper_shadow(df),
         'BODY': body(df), 'BODY_ABS': body_abs(df), 'PRICE_PCG': price_pcg(df)
-    }
+    })
 
 
-def lower_shadow(df):
-    """
-    下影线
-    :param df:
-    :return:
-    """
-    return abs(df['low'] - MIN(df['open'], df['close']))
-
-
-def upper_shadow(df):
-    """
-    上影线
-    :param df:
-    :return:
-    """
-    return abs(df['high'] - MAX(df['open'], df['close']))
-
-
-def body_abs(df):
-    """
-
-    :param df:
-    :return:
-    """
-    return abs(df['open'] - df['close'])
-
-
-def body(df):
-    """
-
-    :param df:
-    :return:
-    """
-    return df['close'] - df['open']
-
-
-def price_pcg(df):
-    """
-
-    :param df:
-    :return:
-    """
-    return body(df) / df['open']
-
-
-def amplitude(df):
-    """
-
-    :param df:
-    :return:
-    """
-    return (df['high'] - df['low']) / df['low']

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
-Chat
+God
 神型
 @author Tab
 """

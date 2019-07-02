@@ -23,109 +23,134 @@ General Trend
 from indicator.base import *
 
 
-def ABI(df, M=10):
+def ABI(dp, M=10):
     """
     绝对广量指标
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    ABI = 100 * ABS(ADVANCE - DECLINE) / (ADVANCE + DECLINE)
-    MAABI = EMA(ABI, M)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # ABI = 100 * ABS(ADVANCE - DECLINE) / (ADVANCE + DECLINE)
+    # MAABI = EMA(ABI, M)
+    # return pd.DataFrame({
+    #     'ABI': ABI, 'MAABI': MAABI
+    # })
 
-    return pd.DataFrame({
-        'ABI': ABI, 'MAABI': MAABI
-    })
 
-
-def ADL(df, M=7):
+def ADL(dp, M=7):
     """
     腾落指标
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    ADL = SUM(ADVANCE - DECLINE, 0)
-    MAADL = MA(ADL, M)
-    DICT = {'ADL': ADL, 'MAADL': MAADL}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # ADL = SUM(ADVANCE - DECLINE, 0)
+    # MAADL = MA(ADL, M)
+    # return pd.DataFrame({
+    #     'ADL': ADL, 'MAADL': MAADL
+    # })
 
 
-def ADR(df, N=10, M=6):
+def ADR(dp, N=10, M=6):
     """
     涨跌比率
     :param N:
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    ADR = SUM(ADVANCE, N) / SUM(DECLINE, N)
-    MAADR = MA(ADR, M)
-    DICT = {'ADR': ADR, 'MAADR': MAADR}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # ADR = SUM(ADVANCE, N) / SUM(DECLINE, N)
+    # MAADR = MA(ADR, M)
+    # return pd.DataFrame({
+    #     'ADR': ADR, 'MAADR': MAADR
+    # })
 
 
-def ARMS(df, N=10, M=6):
+def ARMS(dp, N=10, M=6):
     """
     阿姆氏指标
     :param N:
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    ARMS = EMA(ADVANCE / DECLINE, N)
-    MAARMS = MA(ARMS, M)
-    DICT = {'ARMS': ARMS, 'MAARMS': MAARMS}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # ARMS = EMA(ADVANCE / DECLINE, N)
+    # MAARMS = MA(ARMS, M)
+    # return pd.DataFrame({
+    #     'ARMS': ARMS, 'MAARMS': MAARMS
+    # })
 
 
-def BTI(df, N=10, M=6):
+def BTI(dp, N=10, M=6):
     """
     广量冲力指标
     :param N:
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    BTI = EMA(100 * ADVANCE / (ADVANCE + DECLINE), N)
-    MABTI = MA(BTI, M)
-    DICT = {'BTI': BTI, 'MABTI': MABTI}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # BTI = EMA(100 * ADVANCE / (ADVANCE + DECLINE), N)
+    # MABTI = MA(BTI, M)
+    # return pd.DataFrame({
+    #     'BTI': BTI, 'MABTI': MABTI
+    # })
 
 
-def BTI(df, N1=10, N2=6):
+def BTI(dp, N1=10, N2=6):
     """
     麦克连指标
     :param N1:
     :param N2:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    DIF = ADVANCE - DECLINE
-    EMA1 = EMA(DIF, N1)
-    EMA2 = EMA(DIF, N2)
-    MCL = EMA1 - EMA2
-    MAMCL1 = EMA1
-    MAMCL2 = EMA2
-    DICT = {'MCL': MCL, 'MAMCL1': MAMCL1, 'MAMCL2': MAMCL2}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']  # 上涨家数
+    # DECLINE = dp['decline']  # 下跌家数
+    #
+    # DIF = ADVANCE - DECLINE
+    #
+    # MAMCL1 = EMA(DIF, N1)
+    # MAMCL2 = EMA(DIF, N2)
+    # MCL = MAMCL1 - MAMCL2
+    # return pd.DataFrame({
+    #     'MCL': MCL, 'MAMCL1': MAMCL1, 'MAMCL2': MAMCL2
+    # })
 
 
-def STIX(df, M=6):
+def STIX(dp, M=6):
     """
     超买超卖指标
     :param M:
     :return:
     """
-    ADVANCE = df['advance']
-    DECLINE = df['decline']
-    TBR = 100 * ADVANCE / (ADVANCE + DECLINE)
-    MATBR = EMA(TBR, M)
-    DICT = {'TBR': TBR, 'MATBR': MATBR}
-    return pd.DataFrame(DICT)
+    # 广量指标方法未做
+    pass
+    # ADVANCE = dp['advance']
+    # DECLINE = dp['decline']
+    #
+    # TBR = 100 * ADVANCE / (ADVANCE + DECLINE)
+    # MATBR = EMA(TBR, M)
+    # return pd.DataFrame({
+    #     'TBR': TBR, 'MATBR': MATBR
+    # })

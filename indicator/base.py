@@ -31,7 +31,10 @@ def IF(logic, a, b):
     :param b:
     :return:
     """
-    return pd.Series(np.where(logic, a, b), index=a.index)
+    if type(a) == int:
+        return pd.Series(np.where(logic, a, b))
+    else:
+        return pd.Series(np.where(logic, a, b), index=a.index)
 
 
 def IFAND(logic1, logic2, a, b):
@@ -122,7 +125,10 @@ def CROSS(a, b):
     :param b:
     :return:
     """
-    return (pd.Series(np.where(a < b, 1, 0), index=a.index).diff() < 0).apply(int)
+    if type(a) == int:
+        return (pd.Series(np.where(a < b, 1, 0)).diff() < 0).apply(int)
+    else:
+        return (pd.Series(np.where(a < b, 1, 0), index=a.index).diff() < 0).apply(int)
 
 
 def MA(series, n=2):
@@ -200,6 +206,60 @@ def REF(series, n=2):
     """
     return series - series.diff(n)
 
+
+def lower_shadow(df):
+    """
+    下影线
+    :param df:
+    :return:
+    """
+    return abs(df['low'] - MIN(df['open'], df['close']))
+
+
+def upper_shadow(df):
+    """
+    上影线
+    :param df:
+    :return:
+    """
+    return abs(df['high'] - MAX(df['open'], df['close']))
+
+
+def body_abs(df):
+    """
+    波动绝对值
+    :param df:
+    :return:
+    """
+    return abs(df['open'] - df['close'])
+
+
+def body(df):
+    """
+    波动
+    :param df:
+    :return:
+    """
+    return df['close'] - df['open']
+
+
+def price_pcg(df):
+    """
+
+    :param df:
+    :return:
+    """
+    return body(df) / df['open']
+
+
+# def amplitude(df):
+#     """
+#     振幅
+#     :param df:
+#     :return:
+#     """
+#     return (df['high'] - df['low']) / df['low']
+#
 # def MEMA(series, n):
 #     """
 #     改良平滑移动平均

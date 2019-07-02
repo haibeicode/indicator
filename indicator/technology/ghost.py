@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
-Chat
+Ghost
 鬼型
 @author Tab
 """

@@ -33,6 +33,7 @@ def BRAR(df, N=26):
     CLOSE = df['close']
     HIGH = df['high']
     LOW = df['low']
+
     BR = SUM(MAX(0, HIGH - REF(CLOSE, 1)), N) / SUM(MAX(0, REF(CLOSE, 1) - LOW), N) * 100
     AR = SUM(HIGH - OPEN, N) / SUM(OPEN - LOW, N) * 100
     return pd.DataFrame({
@@ -154,6 +155,7 @@ def CYR(df, N=5, M=5):
     """
     VOL = df['volume']
     AMOUNT = df['amount']
+
     DIVE = 0.01 * EMA(AMOUNT, N) / EMA(VOL, N)
 
     CRY = (DIVE / REF(DIVE, 1) - 1) * 100

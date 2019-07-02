@@ -30,6 +30,7 @@ def AMO(df, M1=5, M2=10):
     :return:
     """
     AMOUNT = df['amount']
+
     AMOW = AMOUNT / 10000.0
     AMO1 = MA(AMOW, M1)
     AMO2 = MA(AMOW, M2)
@@ -51,7 +52,6 @@ def OBV(df, M=30):
 
     OBV = SUM(IF(CLOSE == REF(CLOSE, 1), 0, VA), 0)
     MAOBV = MA(OBV, M)
-
     return pd.DataFrame({
         'OBV': OBV, 'MAOBV': MAOBV
     })
@@ -65,6 +65,7 @@ def QVOL(df, M1=5, M2=10):
     :return:
     """
     VOL = df['volume']
+
     VOLUME = VOL
     MAVOL1 = MA(VOLUME, M1)
     MAVOL2 = MA(VOLUME, M2)
@@ -88,7 +89,6 @@ def VRSI(df, N1=6, N2=12, N3=24):
     RSI1 = SMA(MAX(VOL - LC, 0), N1, 1) / SMA(ABS(VOL - LC), N1, 1) * 100
     RSI2 = SMA(MAX(VOL - LC, 0), N2, 1) / SMA(ABS(VOL - LC), N2, 1) * 100
     RSI3 = SMA(MAX(VOL - LC, 0), N3, 1) / SMA(ABS(VOL - LC), N3, 1) * 100
-
     return pd.DataFrame({
         'RSI1': RSI1, 'RSI2': RSI2, 'RSI3': RSI3
     })
@@ -103,6 +103,7 @@ def DBQRV(df, dp, N=5):
     """
     VOL = df['volume']
     INDEXV = dp['volume']
+
     ZS = (INDEXV - REF(INDEXV, N)) / REF(INDEXV, N)
     GG = (VOL - REF(VOL, N)) / REF(VOL, N)
     return pd.DataFrame({
@@ -120,11 +121,12 @@ def DBLB(df, dp, N=5, M=5):
     """
     VOL = df['volume']
     INDEXV = dp['volume']
+
     GG = VOL / SUM(REF(VOL, 1), N)
     ZS = INDEXV / SUM(REF(INDEXV, 1), N)
 
-    DBLB = GG / ZS;
-    MADBLB = MA(DBLB, M);
+    DBLB = GG / ZS
+    MADBLB = MA(DBLB, M)
     return pd.DataFrame({
         'DBLB': DBLB, 'MADBLB': MADBLB
     })
