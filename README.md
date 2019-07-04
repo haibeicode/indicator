@@ -12,52 +12,28 @@
     </a>
   </td>
 </tr>
-<!--tr>
+<tr>
   <td>Package Status</td>
   <td>
-		<a href="https://pypi.org/project/pandas/">
-		<img src="https://img.shields.io/pypi/status/pandas.svg" alt="status" />
-		</a>
+	<a href="https://pypi.org/project/indicator/">
+	<img src="https://img.shields.io/pypi/status/indicator.svg" alt="status" />
+	</a>
   </td>
 </tr>
 <tr>
   <td>License</td>
   <td>
-    <a href="https://github.com/pandas-dev/pandas/blob/master/LICENSE">
-    <img src="https://img.shields.io/pypi/l/pandas.svg" alt="license" />
+    <a href="https://github.com/haibeicode/indicator/blob/master/LICENSE">
+    <img src="https://img.shields.io/pypi/l/indicator.svg" alt="license" />
     </a>
 </td>
 </tr>
 <tr>
-  <td>Build Status</td>
-  <td>
-    <a href="https://travis-ci.org/pandas-dev/pandas">
-    <img src="https://travis-ci.org/pandas-dev/pandas.svg?branch=master" alt="travis build status" />
-    </a>
-  </td>
-</tr>
-<tr>
-  <td></td>
-  <td>
-    <a href="https://dev.azure.com/pandas-dev/pandas/_build/latest?definitionId=1&branch=master">
-      <img src="https://dev.azure.com/pandas-dev/pandas/_apis/build/status/pandas-dev.pandas?branch=master" alt="Azure Pipelines build status" />
-    </a>
-  </td>
-</tr>
-<tr>
-  <td>Coverage</td>
-  <td>
-    <a href="https://codecov.io/gh/pandas-dev/pandas">
-    <img src="https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=master" alt="coverage" />
-    </a>
-  </td>
-</tr-->
-<tr>
 	<td>Docs</td>
 	<td>
-    <a href='https://indicator.readthedocs.io/en/latest/?badge=latest'>
-        <img src='https://readthedocs.org/projects/indicator/badge/?version=latest' alt='Documentation Status' />
-    </a>
+		<a href='https://indicator.readthedocs.io/en/latest/?badge=latest'>
+		<img src='https://readthedocs.org/projects/indicator/badge/?version=latest' alt='Documentation Status' />
+		</a>
 	</td>
 </tr>
 <tr>
