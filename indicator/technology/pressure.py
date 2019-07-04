@@ -20,68 +20,6 @@ Pressure Indicators
 from indicator.base import *
 
 
-def MIKE(df, N=12):
-    """
-    MIKE指标
-    :param df:
-    :param N:
-    :return:
-    """
-    HIGH = df['high']
-    LOW = df['low']
-    CLOSE = df['close']
-
-    TYP = (HIGH + LOW + CLOSE) / 3
-    LL = LLV(LOW, N)
-    HH = HHV(HIGH, N)
-
-    WR = TYP + (TYP - LL)
-    MR = TYP + (HH - LL)
-    SR = 2 * HH - LL
-    WS = TYP - (HH - TYP)
-    MS = TYP - (HH - LL)
-    SS = 2 * LL - HH
-    return pd.DataFrame({
-        'WR': WR, 'MR': MR, 'SR': SR, 'WS': WS, 'MS': MS, 'SS': SS
-    })
-
-
-def MFI(df, N=14):
-    """
-    资金指标
-    :param df:
-    :param N:
-    :return:
-    """
-    C = df['close']
-    H = df['high']
-    L = df['low']
-    VOL = df['volume']
-    TYP = (C + H + L) / 3
-    V1 = SUM(IF(TYP > REF(TYP, 1), TYP * VOL, 0), N) / SUM(IF(TYP < REF(TYP, 1), TYP * VOL, 0), N)
-
-    MFI = 100 - (100 / (1 + V1))
-    return pd.DataFrame({
-        'MFI': MFI
-    })
-
-
-def ATR(df, N=14):
-    """
-    简单移动平均
-    :param df:
-    :param N:
-    :return:
-    """
-    C = df['close']
-    H = df['high']
-    L = df['low']
-
-    TR = MAX(MAX((H - L), ABS(REF(C, 1) - H)), ABS(REF(C, 1) - L))
-    ATR = MA(TR, N)
-    return pd.DataFrame({'TR': TR, 'ATR': ATR})
-
-
 def DDI(df, N=13, N1=26, M=1, M1=5):
     """
     方向标准离差指数 分析DDI柱状线，由红变绿(正变负)，卖出信号参考；由绿变红，买入信号参考。
@@ -117,5 +55,3 @@ def shadow(df):
         'LOW': lower_shadow(df), 'UP': upper_shadow(df),
         'BODY': body(df), 'BODY_ABS': body_abs(df), 'PRICE_PCG': price_pcg(df)
     })
-
-

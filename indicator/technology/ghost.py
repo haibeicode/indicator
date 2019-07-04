@@ -39,7 +39,7 @@ def CYS(df):
     })
 
 
-def CYS(df):
+def CYW(df):
     """
     主力控盘
     :param df:

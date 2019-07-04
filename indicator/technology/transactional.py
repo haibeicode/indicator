@@ -43,7 +43,7 @@ def MAJY(df, SHORT=5, LONG=20):
 
 def MACDJY(df, SHORT=12, LONG=26, MID=9):
     """
-    MA交易
+    MACD交易
     :param df:
     :param SHORT:
     :param LONG:

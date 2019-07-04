@@ -57,7 +57,7 @@ def OBV(df, M=30):
     })
 
 
-def QVOL(df, M1=5, M2=10):
+def VOL(df, M1=5, M2=10):
     """
     成交量
     :param M1:
