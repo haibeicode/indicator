@@ -189,11 +189,11 @@ def HSCOL(df, N=5):
     :param N:
     :return:
     """
-    # SETCODE函数方法不确定
-    pass
-    # VOL = df['volume']
-    # HSCOL = IF((SETCODE == 0 or SETCODE == 1), 100 * VOL, VOL) / (FINANCE(7) / 100)
-    # MAHSL = MA(HSCOL, N)
-    # return pd.DataFrame({
-    #     'HSCOL': HSCOL, 'MAHSL': MAHSL
-    # })
+
+    VOL = df['volume']
+    FLOW = df['flow_share']  # 流通股本(股)
+    HSL = 100 * VOL / (FLOW / 100)
+    MAHSL = MA(HSCOL, N)
+    return pd.DataFrame({
+        'HSCOL': HSCOL, 'MAHSL': MAHSL
+    })

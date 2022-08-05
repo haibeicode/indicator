@@ -252,6 +252,15 @@ def price_pcg(df):
     return body(df) / df['open']
 
 
+def MEMA(series, n):
+    """
+    改良平滑移动平均
+    :param series:
+    :param n:
+    :return:
+    """
+    return ((series.rolling(window=n).mean() * (n - 1) + 2 * series) / (n + 1)).close
+
 # def amplitude(df):
 #     """
 #     振幅
@@ -260,11 +269,3 @@ def price_pcg(df):
 #     """
 #     return (df['high'] - df['low']) / df['low']
 #
-# def MEMA(series, n):
-#     """
-#     改良平滑移动平均
-#     :param series:
-#     :param n:
-#     :return:
-#     """
-#     return pd.Series.ewma(series, span=n)

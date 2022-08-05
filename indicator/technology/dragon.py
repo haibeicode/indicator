@@ -175,7 +175,7 @@ def SLZT(df):
     """
     # 抛物转向方法不确定
     pass
-    #
+
     # CLOSE = df['close']
     # HIGH = df['high']
     #

@@ -21,7 +21,7 @@ Overbought and Oversold
 """
 
 from indicator.base import *
-from indicator.technology.average import (EXPMEMA)
+from indicator.technology.average import (EXPMEMA, HSL)
 
 
 def CCI(df, N=14):
@@ -358,15 +358,13 @@ def RSI(df, N=6, M=12):
     :param M:
     :return:
     """
-    # 指数平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    #
-    # OSC = 100 * (CLOSE - MA(CLOSE, N))
-    # MAOSC = EXPMEMA(OSC, M)
-    # return pd.DataFrame({
-    #     'OSC': OSC, 'MAOSC': MAOSC
-    # })
+    CLOSE = df['close']
+
+    OSC = 100 * (CLOSE - MA(CLOSE, N))
+    MAOSC = EXPMEMA(OSC, M)
+    return pd.DataFrame({
+        'OSC': OSC, 'MAOSC': MAOSC
+    })
 
 
 def OSC(df, N=20, M=6):
@@ -377,15 +375,13 @@ def OSC(df, N=20, M=6):
     :param M:
     :return:
     """
-    # 指数平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    #
-    # OSC = 100 * (CLOSE - MA(CLOSE, N))
-    # MAOSC = EXPMEMA(OSC, M)
-    # return pd.DataFrame({
-    #     'OSC': OSC, 'MAOSC': MAOSC
-    # })
+    CLOSE = df['close']
+
+    OSC = 100 * (CLOSE - MA(CLOSE, N))
+    MAOSC = EXPMEMA(OSC, M)
+    return pd.DataFrame({
+        'OSC': OSC, 'MAOSC': MAOSC
+    })
 
 
 def ROC(df, N=12, M=6):
@@ -396,15 +392,13 @@ def ROC(df, N=12, M=6):
     :param M:
     :return:
     """
-    # 指数平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    # OSC = 100 * (CLOSE - MA(CLOSE, N))
-    # MAOSC = EXPMEMA(OSC, M)
-    #
-    # return pd.DataFrame({
-    #     'ROC': OSC, 'MAOSC': MAOSC
-    # })
+    CLOSE = df['close']
+    OSC = 100 * (CLOSE - MA(CLOSE, N))
+    MAOSC = EXPMEMA(OSC, M)
+
+    return pd.DataFrame({
+        'ROC': OSC, 'MAOSC': MAOSC
+    })
 
 
 def CYD(df, N=21):
@@ -432,10 +426,8 @@ def CYF(df, N=21):
     :param M:
     :return:
     """
-    # 换手线函数方法不确定
-    pass
-    # CYF = 100 - 100 / (1 + EMA(HSL, N))
-    # return pd.DataFrame(CYF)
+    CYF = 100 - 100 / (1 + EMA(HSL, N))
+    return pd.DataFrame(CYF)
 
 
 def FSL(df):
@@ -463,19 +455,17 @@ def MARSI(df, M1=10, M2=6):
     :param M2:
     :return:
     """
-    # 改良平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    # DIF = CLOSE - REF(CLOSE, 1)
-    # VU = IF(DIF >= 0, DIF, 0)
-    # VD = IF(DIF < 0, -DIF, 0)
-    # MAU1 = MEMA(VU, M1)
-    # MAD1 = MEMA(VD, M1)
-    # MAU2 = MEMA(VU, M2)
-    # MAD2 = MEMA(VD, M2)
-    #
-    # RSI10 = MA(100 * MAU1 / (MAU1 + MAD1), M1)
-    # RSI6 = MA(100 * MAU2 / (MAU2 + MAD2), M2)
-    # DICT = {'RSI10': RSI10, 'RSI6': RSI6}
-    #
-    # return pd.DataFrame(DICT)
+    CLOSE = df['close']
+    DIF = CLOSE - REF(CLOSE, 1)
+    VU = IF(DIF >= 0, DIF, 0)
+    VD = IF(DIF < 0, -DIF, 0)
+    MAU1 = MEMA(VU, M1)
+    MAD1 = MEMA(VD, M1)
+    MAU2 = MEMA(VU, M2)
+    MAD2 = MEMA(VD, M2)
+
+    RSI10 = MA(100 * MAU1 / (MAU1 + MAD1), M1)
+    RSI6 = MA(100 * MAU2 / (MAU2 + MAD2), M2)
+    DICT = {'RSI10': RSI10, 'RSI6': RSI6}
+
+    return pd.DataFrame(DICT)

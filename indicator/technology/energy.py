@@ -172,12 +172,10 @@ def PCNT(df, M=5):
     :param M:
     :return:
     """
-    # 指数平滑移动平均平均方法不确定
-    pass
-    # CLOSE = df['close']
-    #
-    # PCNT = (CLOSE - REF(CLOSE, 1)) / CLOSE * 100
-    # MAPCNT = EXPMEMA(PCNT, M)
-    # return pd.DataFrame({
-    #     'WAD': WAD, 'MAPCNT': MAPCNT
-    # })
+    CLOSE = df['close']
+
+    PCNT = (CLOSE - REF(CLOSE, 1)) / CLOSE * 100
+    MAPCNT = EXPMEMA(PCNT, M)
+    return pd.DataFrame({
+        'WAD': WAD, 'MAPCNT': MAPCNT
+    })

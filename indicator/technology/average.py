@@ -212,31 +212,14 @@ def EXPMEMA(df, P1=5, P2=10, P3=20, P4=60):
     :param P4:
     :return:
     """
-    # 改良平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    # MA1 = MEMA(CLOSE, P1)
-    # MA2 = MEMA(CLOSE, P2)
-    # MA3 = MEMA(CLOSE, P3)
-    # MA4 = MEMA(CLOSE, P4)
-    # return pd.DataFrame({
-    #     'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
-    # })
-
-    # def HSL(df, N=5):
-    #     """
-    #     换手线
-    #     :param df:
-    #     :param N:
-    #     :return:
-    #     """
-    #
-    #     VOL = df['volume']
-    #     HSL = IF((SETCODE == 0 or SETCODE == 1), 100 * VOL, VOL) / (FINANCE(7) / 100)
-    #     MAHSL = MA(HSL, N)
-    #     return pd.DataFrame({
-    #         'HSL': HSL, 'MAHSL': MAHSL
-    #     })
+    CLOSE = df['close']
+    MA1 = MEMA(CLOSE, P1)
+    MA2 = MEMA(CLOSE, P2)
+    MA3 = MEMA(CLOSE, P3)
+    MA4 = MEMA(CLOSE, P4)
+    return pd.DataFrame({
+        'MA1': MA1, 'MA2': MA2, 'MA3': MA3, 'MA4': MA4
+    })
 
 
 def ACD(df, M=20):
@@ -246,16 +229,30 @@ def ACD(df, M=20):
     :param M:
     :return:
     """
-    # 指数平滑移动平均方法不确定
-    pass
-    # CLOSE = df['close']
-    # LOW = df['low']
-    # HIGH = df['high']
-    # LC = REF(CLOSE, 1)
-    # DIF = CLOSE - IF(CLOSE > LC, MIN(LOW, LC), MAX(HIGH, LC))
-    #
-    # ACD = SUM(IF(CLOSE == LC, 0, DIF), 0)
-    # MAACD = EXPMEMA(ACD, M)
-    # return pd.DataFrame({
-    #     'ACD': ACD, 'MAACD': MAACD
-    # })
+    CLOSE = df['close']
+    LOW = df['low']
+    HIGH = df['high']
+    LC = REF(CLOSE, 1)
+    DIF = CLOSE - IF(CLOSE > LC, MIN(LOW, LC), MAX(HIGH, LC))
+
+    ACD = SUM(IF(CLOSE == LC, 0, DIF), 0)
+    MAACD = EXPMEMA(ACD, M)
+    return pd.DataFrame({
+        'ACD': ACD, 'MAACD': MAACD
+    })
+
+
+def HSL(df, N=5):
+    """
+    换手线
+    :param df:
+    :param N:
+    :return:
+    """
+    VOL = df['volume']
+    FLOW = df['flow_share']  # 流通股本(股)
+    HSL = 100 * VOL / (FLOW / 100)
+    MAHSL = MA(HSL, N)
+    return pd.DataFrame({
+        'HSL': HSL, 'MAHSL': MAHSL
+    })

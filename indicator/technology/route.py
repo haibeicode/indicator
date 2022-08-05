@@ -145,20 +145,19 @@ def XS2(df, N=102, M=7):
     :param M:
     :return:
     """
-    pass
-    # CLOSE = df['close']
-    # HIGH = df['high']
-    # LOW = df['low']
-    #
-    # AA = MA((2 * CLOSE + HIGH + LOW) / 4, 5)
-    # CC = ABS((2 * CLOSE + HIGH + LOW) / 4 - MA(CLOSE, 20)) / MA(CLOSE, 20)
-    # DD = DMA(df, CC)
-    #
-    # TD1 = AA * N / 100
-    # TD2 = AA * (200 - N) / 100
-    # TD3 = (1 + M / 100) * DD
-    # TD4 = (1 - M / 100) * DD
-    #
-    # return pd.DataFrame({
-    #     'TD1': TD1, 'TD2': TD2, 'TD3': TD3, 'TD4': TD4
-    # })
+    CLOSE = df['close']
+    HIGH = df['high']
+    LOW = df['low']
+
+    AA = MA((2 * CLOSE + HIGH + LOW) / 4, 5)
+    CC = ABS((2 * CLOSE + HIGH + LOW) / 4 - MA(CLOSE, 20)) / MA(CLOSE, 20)
+    DD = DMA(df, CC)
+
+    TD1 = AA * N / 100
+    TD2 = AA * (200 - N) / 100
+    TD3 = (1 + M / 100) * DD
+    TD4 = (1 - M / 100) * DD
+
+    return pd.DataFrame({
+        'TD1': TD1, 'TD2': TD2, 'TD3': TD3, 'TD4': TD4
+    })

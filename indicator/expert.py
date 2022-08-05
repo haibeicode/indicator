@@ -20,6 +20,7 @@ Energy Indicator
 from indicator.base import *
 from indicator.technology.countertrend import (CCI, MTM, ROC)
 from indicator.technology.energy import (PSY)
+from indicator.technology.average import (HSL)
 
 
 def MACDZJ(df, LONG=5, SHORT=4, M=1):
@@ -323,16 +324,14 @@ def DPSLZJ(dp, N1=2, N2=1):
     :param N2:
     :return:
     """
-    # 换手线函数方法不确定
-    pass
-    # INDEXC = dp['close']
-    # INDEXL = dp['low']
-    # INDEXH = dp['high']
-    # RSV = (INDEXC - LLV(INDEXL, N1)) / (HHV(INDEXH, N1) - LLV(INDEXL, N1)) * 100
-    # K = SMA(RSV, N2, 1)
-    #
-    # ENTERLONG = CROSS(K, 20)
-    # EXITLONG = (CROSS(HSL, 5) or CROSS(K, 80))
-    # return pd.DataFrame({
-    #     'ENTERLONG': ENTERLONG, 'EXITLONG': EXITLONG
-    # })
+    INDEXC = dp['close']
+    INDEXL = dp['low']
+    INDEXH = dp['high']
+    RSV = (INDEXC - LLV(INDEXL, N1)) / (HHV(INDEXH, N1) - LLV(INDEXL, N1)) * 100
+    K = SMA(RSV, N2, 1)
+
+    ENTERLONG = CROSS(K, 20)
+    EXITLONG = (CROSS(HSL, 5) or CROSS(K, 80))
+    return pd.DataFrame({
+        'ENTERLONG': ENTERLONG, 'EXITLONG': EXITLONG
+    })

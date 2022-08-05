@@ -398,19 +398,18 @@ def GDX(df, N=30, M=9):
     :param M:
     :return:
     """
-    pass
-    # CLOSE = df['close']
-    # HIGH = df['high']
-    # LOW = df['low']
-    #
-    # AA = ABS((2 * CLOSE + HIGH + LOW) / 4 - MA(CLOSE, N)) / MA(CLOSE, N)
-    #
-    # GD = DMA(CLOSE, AA)
-    # YLX = (1 + M / 100) * GD
-    # ZCX = (1 - M / 100) * GD
-    # return pd.DataFrame({
-    #     'GD': GD, 'YLX': YLX, 'ZCX': ZCX
-    # })
+    CLOSE = df['close']
+    HIGH = df['high']
+    LOW = df['low']
+
+    AA = ABS((2 * CLOSE + HIGH + LOW) / 4 - MA(CLOSE, N)) / MA(CLOSE, N)
+
+    GD = DMA(CLOSE, AA)
+    YLX = (1 + M / 100) * GD
+    ZCX = (1 - M / 100) * GD
+    return pd.DataFrame({
+        'GD': GD, 'YLX': YLX, 'ZCX': ZCX
+    })
 
 
 def JLHB(df, N=7, M=5):
@@ -421,16 +420,15 @@ def JLHB(df, N=7, M=5):
     :param M:
     :return:
     """
-    pass
-    # CLOSE = df['close']
-    # HIGH = df['high']
-    # LOW = df['low']
-    #
-    # VAR1 = (CLOSE - LLV(LOW, 60)) / (HHV(HIGH, 60) - LLV(LOW, 60)) * 80
-    #
-    # B = SMA(VAR1, N, 1)
-    # VAR2 = SMA(B, M, 1)
-    # JLHB = IF(CROSS(B, VAR2) and B < 40, 50, 0)
-    # return pd.DataFrame({
-    #     'B': B, 'VAR2': VAR2, 'JLHB': JLHB
-    # })
+    CLOSE = df['close']
+    HIGH = df['high']
+    LOW = df['low']
+
+    VAR1 = (CLOSE - LLV(LOW, 60)) / (HHV(HIGH, 60) - LLV(LOW, 60)) * 80
+
+    B = SMA(VAR1, N, 1)
+    VAR2 = SMA(B, M, 1)
+    JLHB = IF(CROSS(B, VAR2) and B < 40, 50, 0)
+    return pd.DataFrame({
+        'B': B, 'VAR2': VAR2, 'JLHB': JLHB
+    })

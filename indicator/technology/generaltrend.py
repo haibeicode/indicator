@@ -29,16 +29,14 @@ def ABI(dp, M=10):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # ABI = 100 * ABS(ADVANCE - DECLINE) / (ADVANCE + DECLINE)
-    # MAABI = EMA(ABI, M)
-    # return pd.DataFrame({
-    #     'ABI': ABI, 'MAABI': MAABI
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    ABI = 100 * ABS(ADVANCE - DECLINE) / (ADVANCE + DECLINE)
+    MAABI = EMA(ABI, M)
+    return pd.DataFrame({
+        'ABI': ABI, 'MAABI': MAABI
+    })
 
 
 def ADL(dp, M=7):
@@ -47,16 +45,14 @@ def ADL(dp, M=7):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # ADL = SUM(ADVANCE - DECLINE, 0)
-    # MAADL = MA(ADL, M)
-    # return pd.DataFrame({
-    #     'ADL': ADL, 'MAADL': MAADL
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    ADL = SUM(ADVANCE - DECLINE, 0)
+    MAADL = MA(ADL, M)
+    return pd.DataFrame({
+        'ADL': ADL, 'MAADL': MAADL
+    })
 
 
 def ADR(dp, N=10, M=6):
@@ -66,16 +62,14 @@ def ADR(dp, N=10, M=6):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # ADR = SUM(ADVANCE, N) / SUM(DECLINE, N)
-    # MAADR = MA(ADR, M)
-    # return pd.DataFrame({
-    #     'ADR': ADR, 'MAADR': MAADR
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    ADR = SUM(ADVANCE, N) / SUM(DECLINE, N)
+    MAADR = MA(ADR, M)
+    return pd.DataFrame({
+        'ADR': ADR, 'MAADR': MAADR
+    })
 
 
 def ARMS(dp, N=10, M=6):
@@ -85,16 +79,14 @@ def ARMS(dp, N=10, M=6):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # ARMS = EMA(ADVANCE / DECLINE, N)
-    # MAARMS = MA(ARMS, M)
-    # return pd.DataFrame({
-    #     'ARMS': ARMS, 'MAARMS': MAARMS
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    ARMS = EMA(ADVANCE / DECLINE, N)
+    MAARMS = MA(ARMS, M)
+    return pd.DataFrame({
+        'ARMS': ARMS, 'MAARMS': MAARMS
+    })
 
 
 def BTI(dp, N=10, M=6):
@@ -104,16 +96,14 @@ def BTI(dp, N=10, M=6):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # BTI = EMA(100 * ADVANCE / (ADVANCE + DECLINE), N)
-    # MABTI = MA(BTI, M)
-    # return pd.DataFrame({
-    #     'BTI': BTI, 'MABTI': MABTI
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    BTI = EMA(100 * ADVANCE / (ADVANCE + DECLINE), N)
+    MABTI = MA(BTI, M)
+    return pd.DataFrame({
+        'BTI': BTI, 'MABTI': MABTI
+    })
 
 
 def BTI(dp, N1=10, N2=6):
@@ -123,19 +113,17 @@ def BTI(dp, N1=10, N2=6):
     :param N2:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']  # 上涨家数
-    # DECLINE = dp['decline']  # 下跌家数
-    #
-    # DIF = ADVANCE - DECLINE
-    #
-    # MAMCL1 = EMA(DIF, N1)
-    # MAMCL2 = EMA(DIF, N2)
-    # MCL = MAMCL1 - MAMCL2
-    # return pd.DataFrame({
-    #     'MCL': MCL, 'MAMCL1': MAMCL1, 'MAMCL2': MAMCL2
-    # })
+    ADVANCE = dp['advance']  # 上涨家数
+    DECLINE = dp['decline']  # 下跌家数
+
+    DIF = ADVANCE - DECLINE
+
+    MAMCL1 = EMA(DIF, N1)
+    MAMCL2 = EMA(DIF, N2)
+    MCL = MAMCL1 - MAMCL2
+    return pd.DataFrame({
+        'MCL': MCL, 'MAMCL1': MAMCL1, 'MAMCL2': MAMCL2
+    })
 
 
 def STIX(dp, M=6):
@@ -144,13 +132,11 @@ def STIX(dp, M=6):
     :param M:
     :return:
     """
-    # 广量指标方法未做
-    pass
-    # ADVANCE = dp['advance']
-    # DECLINE = dp['decline']
-    #
-    # TBR = 100 * ADVANCE / (ADVANCE + DECLINE)
-    # MATBR = EMA(TBR, M)
-    # return pd.DataFrame({
-    #     'TBR': TBR, 'MATBR': MATBR
-    # })
+    ADVANCE = dp['advance']
+    DECLINE = dp['decline']
+
+    TBR = 100 * ADVANCE / (ADVANCE + DECLINE)
+    MATBR = EMA(TBR, M)
+    return pd.DataFrame({
+        'TBR': TBR, 'MATBR': MATBR
+    })
